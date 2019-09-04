@@ -8,6 +8,10 @@ const _ = require('lodash')
 const config = require('./config')
 const commands = require('./commands')
 const helpCommand = require('./commands/help')
+const users = require('./helpers/users');
+const confirmation = require('./helpers/confirmation');
+const exportNote = require('./helpers/exportNote');
+const signature = require('./helpers/verifySignature');
 
 let bot = require('./bot')
 
@@ -24,7 +28,55 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 
+app.post('/slack/events', (req, res) => {
+  //console.log(req)
+  const payload = JSON.parse(req.body.payload);
+  //console.log('payload')
+  console.log(payload)
+  //console.log('payload finished')
+  const {type, user, message} = payload;
+  
 
+  if(type === 'message_action') {
+    // Get user info of the person who posted the original message from the payload
+    const getUserInfo = new Promise((resolve, reject) => {
+      users.find(payload.message.user).then((result) => {
+        resolve(result.data.user.profile.real_name);
+      }).catch((err) => { reject(err); });
+    });
+
+    if (!signature.isVerified(req)) {
+      console.log('Signature is not Verified');
+      //res.sendStatus(404);
+      //return;
+    }
+
+    // Once successfully get the user info, open a dialog with the info
+    getUserInfo.then((userInfoResult) => {
+      openDialog(payload, userInfoResult).then((result) => {
+        if(result.data.error) {
+          console.log(result.data);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }).catch((err) => {
+        res.sendStatus(500);
+      });
+
+    })
+    .catch((err) => { console.error(err); });
+
+  } else if (type === 'dialog_submission') {
+    // immediately respond with a empty 200 response to let
+    // Slack know the command was received
+    res.send('');
+    // create a ClipIt and prepare to export it to the theoritical external app
+    exportNote.exportToJson(user.id, message);
+    // DM the user a confirmation message
+    confirmation.sendConfirmation(user.id, message);
+  }
+});
 
 app.post('/commands/starbot', (req, res) => {
   let payload = req.body
