@@ -13,6 +13,8 @@ const config = {
   WEBHOOK_URL: process.env.WEBHOOK_URL,
   STARBOT_COMMAND_TOKEN: process.env.STARBOT_COMMAND_TOKEN,
   SLACK_TOKEN: process.env.SLACK_TOKEN,
+  SLACK_ACCESS_TOKEN: process.env.SLACK_ACCESS_TOKEN,
+  SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
   ICON_EMOJI: ':stars:'
 }
 
