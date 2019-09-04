@@ -4,6 +4,8 @@
 const express = require('express')
 const proxy = require('express-http-proxy')
 const bodyParser = require('body-parser')
+const axios = require('axios');
+const qs = require('qs');
 const _ = require('lodash')
 const config = require('./config')
 const commands = require('./commands')
@@ -11,6 +13,7 @@ const helpCommand = require('./commands/help')
 const users = require('./helpers/users');
 const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
+
 const signature = require('./helpers/verifySignature');
 
 let bot = require('./bot')
