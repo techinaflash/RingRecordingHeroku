@@ -31,9 +31,9 @@ app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 app.post('/slack/events', (req, res) => {
   //console.log(req)
   const payload = JSON.parse(req.body.payload);
-  //console.log('payload')
+  console.log('******************PAYLOAD START*************************')
   console.log(payload)
-  //console.log('payload finished')
+  console.log('******************PAYLOAD END*************************')
   const {type, user, message} = payload;
   
 
