@@ -45,11 +45,12 @@ app.post('/slack/events', (req, res) => {
       }).catch((err) => { reject(err); });
     });
 
+    /*
     if (!signature.isVerified(req)) {
       console.log('Signature is not Verified');
       //res.sendStatus(404);
       //return;
-    }
+    }*/
 
     // Once successfully get the user info, open a dialog with the info
     getUserInfo.then((userInfoResult) => {
