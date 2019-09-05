@@ -45,7 +45,7 @@ app.post('/slack/events', (req, res) => {
   if(type === 'message_action') {
     // Get user info of the person who posted the original message from the payload
     const getUserInfo = new Promise((resolve, reject) => {
-      users.find(payload.user).then((result) => {
+      users.find(payload.user.id).then((result) => {
         console.log('**********USER FIND RESULT*****************')
         console.log(result)
         resolve(result.data.user.profile.real_name);
