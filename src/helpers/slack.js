@@ -15,6 +15,7 @@ const openDialog = (payload, real_name) => {
 
     const dialogData = {
       token: process.env.SLACK_ACCESS_TOKEN,
+      state: payload.message_ts,
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
@@ -53,7 +54,11 @@ const openDialog = (payload, real_name) => {
     const ephemeralData = {
       token: process.env.SLACK_ACCESS_TOKEN,
       trigger_id: payload.trigger_id,
-      dialog: JSON.stringify({
+      channel: payload.channel.id,
+      text: 'File uploaded to ticket' + payload.submission.ticket,
+      thread_ts: payload.state,
+      user: payload.user.id,
+      attachments: JSON.stringify({
         title: 'Upload file to Syncro',
         callback_id: 'upload_to_syncro',
         submit_label: 'Upload',
