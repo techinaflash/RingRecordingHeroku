@@ -76,7 +76,7 @@ const openDialog = (payload, real_name) => {
     };
   
     // open the dialog by calling dialogs.open method and sending the payload
-    const promise = axios.post(`${apiUrl}/chap.postEphemeral`, qs.stringify(dialogData));
+    const promise = axios.post(`${apiUrl}/chap.postEphemeral`, qs.stringify(ephemeralData));
     return promise;
   };
   //END POST EPHEMERAL
