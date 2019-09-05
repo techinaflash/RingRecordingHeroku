@@ -83,5 +83,4 @@ const openDialog = (payload, real_name) => {
   };
   //END POST EPHEMERAL
 
-module.exports = { openDialog };
-module.exports = { postEphemeral };
+module.exports = { openDialog, postEphemeral };
