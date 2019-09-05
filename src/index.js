@@ -14,7 +14,7 @@ const users = require('./helpers/users');
 const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
 //const signature = require('./helpers/verifySignature');
-const openDialog = require('./helpers/openDialog');
+const slack = require('./helpers/slack');
 
 //const apiUrl = 'https://slack.com/api';
 
@@ -59,7 +59,7 @@ app.post('/slack/events', (req, res) => {
 
     // Once successfully get the user info, open a dialog with the info
     getUserInfo.then((userInfoResult) => {
-      openDialog(payload, userInfoResult).then((result) => {
+      slack.openDialog(payload, userInfoResult).then((result) => {
         if(result.data.error) {
           console.log(result.data);
           res.sendStatus(500);
