@@ -63,16 +63,10 @@ const openDialog = (payload, real_name) => {
         submit_label: 'Upload',
         elements: [
            {
-             label: 'Ticket Private Comment',
-             type: 'textarea',
-             name: 'comment',
-             value: payload.message.text
-           },
-           {
-             label: 'Attach to Ticket #',
+             label: 'Call recording uploaded to ticket',
              type: 'text',
              name: 'ticket',
-             value: ``,
+             value: payload.submission.ticket,
              placeholder: 'Enter a ticket number...'
 
            },
