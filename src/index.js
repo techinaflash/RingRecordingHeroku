@@ -45,7 +45,7 @@ app.post('/slack/events', (req, res) => {
   if(type === 'message_action') {
     // Get user info of the person who posted the original message from the payload
     const getUserInfo = new Promise((resolve, reject) => {
-      users.find(payload.message.user).then((result) => {
+      users.find(payload.user).then((result) => {
         resolve(result.data.user.profile.real_name);
       }).catch((err) => { reject(err); });
     });
@@ -59,6 +59,7 @@ app.post('/slack/events', (req, res) => {
 
     // Once successfully get the user info, open a dialog with the info
     getUserInfo.then((userInfoResult) => {
+      console.log(userInfoResult)
       slack.openDialog(payload, userInfoResult).then((result) => {
         if(result.data.error) {
           console.log(result.data);
@@ -80,7 +81,7 @@ app.post('/slack/events', (req, res) => {
     // create a ClipIt and prepare to export it to the theoritical external app
     //exportNote.exportToJson(user.id, submission);
     // DM the user a confirmation message
-    confirmation.sendConfirmation(user.id, submission);
+    confirmation.postEphemeral(user.id, submission);
   }
 });
 

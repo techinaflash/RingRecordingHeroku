@@ -19,7 +19,7 @@ const openDialog = (payload, real_name) => {
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
         callback_id: 'upload_to_syncro',
-        submit_label: 'SyncroUpload',
+        submit_label: 'Upload',
         elements: [
            {
              label: 'Ticket Private Comment',
@@ -31,7 +31,9 @@ const openDialog = (payload, real_name) => {
              label: 'Attach to Ticket #',
              type: 'text',
              name: 'ticket',
-             value: `123456`
+             value: ``,
+             placeholder: 'Enter a ticket number...'
+
            },
            
         ]
@@ -44,4 +46,42 @@ const openDialog = (payload, real_name) => {
   };
   //END OPEN DIALOG
 
+
+  //BEGIN POST EPHEMERAL
+  const postEphemeral = (payload, real_name) => {
+
+    const ephemeralData = {
+      token: process.env.SLACK_ACCESS_TOKEN,
+      trigger_id: payload.trigger_id,
+      dialog: JSON.stringify({
+        title: 'Upload file to Syncro',
+        callback_id: 'upload_to_syncro',
+        submit_label: 'Upload',
+        elements: [
+           {
+             label: 'Ticket Private Comment',
+             type: 'textarea',
+             name: 'comment',
+             value: payload.message.text
+           },
+           {
+             label: 'Attach to Ticket #',
+             type: 'text',
+             name: 'ticket',
+             value: ``,
+             placeholder: 'Enter a ticket number...'
+
+           },
+           
+        ]
+      })
+    };
+  
+    // open the dialog by calling dialogs.open method and sending the payload
+    const promise = axios.post(`${apiUrl}/chap.postEphemeral`, qs.stringify(dialogData));
+    return promise;
+  };
+  //END POST EPHEMERAL
+
 module.exports = { openDialog };
+module.exports = { postEphemeral };
