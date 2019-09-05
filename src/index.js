@@ -48,7 +48,7 @@ app.post('/slack/events', (req, res) => {
       users.find(payload.user.id).then((result) => {
         console.log('**********USER FIND RESULT*****************')
         console.log(result)
-        resolve(result.data.user.profile.real_name);
+        resolve(result.data.user.real_name);
       }).catch((err) => { reject(err); });
     });
 
@@ -83,7 +83,7 @@ app.post('/slack/events', (req, res) => {
     // create a ClipIt and prepare to export it to the theoritical external app
     //exportNote.exportToJson(user.id, submission);
     // DM the user a confirmation message
-    confirmation.postEphemeral(user.id, submission);
+    slack.postEphemeral(user.id, submission);
   }
 });
 
