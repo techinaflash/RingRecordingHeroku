@@ -22,28 +22,18 @@ const openDialog = (payload, real_name) => {
         submit_label: 'SyncroUpload',
         elements: [
            {
-             label: 'Message Text',
+             label: 'Ticket Private Comment',
              type: 'textarea',
-             name: 'message',
+             name: 'comment',
              value: payload.message.text
            },
            {
-             label: 'Posted by',
+             label: 'Attach to Ticket #',
              type: 'text',
-             name: 'send_by',
-             value: `${real_name}`
+             name: 'ticket',
+             value: `123456`
            },
-           {
-             label: 'Importance',
-             type: 'select',
-             name: 'importance',
-             value: 'Medium 💎',
-             options: [
-               { label: 'High', value: 'High 💎💎✨' },
-               { label: 'Medium', value: 'Medium 💎' },
-               { label: 'Low', value: 'Low ⚪️' }
-             ],
-           },
+           
         ]
       })
     };

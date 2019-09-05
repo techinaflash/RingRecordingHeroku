@@ -39,7 +39,7 @@ app.post('/slack/events', (req, res) => {
   console.log('******************PAYLOAD START*************************')
   console.log(payload)
   console.log('******************PAYLOAD END*************************')
-  const {type, user, message} = payload;
+  const {type, user, message, submission} = payload;
   
 
   if(type === 'message_action') {
@@ -78,9 +78,9 @@ app.post('/slack/events', (req, res) => {
     // Slack know the command was received
     res.send('');
     // create a ClipIt and prepare to export it to the theoritical external app
-    exportNote.exportToJson(user.id, message);
+    exportNote.exportToJson(user.id, submission.message);
     // DM the user a confirmation message
-    confirmation.sendConfirmation(user.id, message);
+    confirmation.sendConfirmation(user.id, submission.message);
   }
 });
 
