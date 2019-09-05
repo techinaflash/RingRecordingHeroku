@@ -13,8 +13,9 @@ const helpCommand = require('./commands/help')
 const users = require('./helpers/users');
 const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
-
 const signature = require('./helpers/verifySignature');
+
+const apiUrl = 'https://slack.com/api';
 
 let bot = require('./bot')
 
