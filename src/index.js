@@ -78,9 +78,9 @@ app.post('/slack/events', (req, res) => {
     // Slack know the command was received
     res.send('');
     // create a ClipIt and prepare to export it to the theoritical external app
-    exportNote.exportToJson(user.id, submission.message);
+    //exportNote.exportToJson(user.id, submission);
     // DM the user a confirmation message
-    confirmation.sendConfirmation(user.id, submission.message);
+    confirmation.sendConfirmation(user.id, submission);
   }
 });
 
