@@ -83,7 +83,7 @@ app.post('/slack/events', (req, res) => {
     // create a ClipIt and prepare to export it to the theoritical external app
     //exportNote.exportToJson(user.id, submission);
     // DM the user a confirmation message
-    slack.postEphemeral(user.id, submission);
+    slack.postEphemeral(payload);
   }
 });
 
