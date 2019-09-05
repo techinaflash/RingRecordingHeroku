@@ -14,6 +14,7 @@ const users = require('./helpers/users');
 const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
 const signature = require('./helpers/verifySignature');
+const openDialog = require('./helpers/openDialog');
 
 const apiUrl = 'https://slack.com/api';
 
