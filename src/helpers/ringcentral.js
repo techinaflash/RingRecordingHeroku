@@ -77,14 +77,14 @@ function login(){
 }
 
 function checkExistingSubscription(){
-  redisclient.get('rc_subscription_id', function (err, id) {
+  /* redisclient.get('rc_subscription_id', function (err, id) {
     if (err) {
       subscribeForNotification()
     }else{
       removeRegisteredSubscription(id)
     }
     console.log('GET result ->' + result);
-  });
+  }); */
   
 }
 
@@ -107,12 +107,12 @@ function subscribeForNotification(){
    .then(function(resp){
      console.log('Ready for getting account presense events')
      var json = resp.json();
-     client.set('rc_subscription_id', json.id, function(err) {
+    /*  client.set('rc_subscription_id', json.id, function(err) {
       if(err)
         console.log(err);
       else
         console.log("SubscriptionId " + json.id + " is stpred.");
-      }); 
+      });  */
    })
    .catch(function(e){
      throw e
