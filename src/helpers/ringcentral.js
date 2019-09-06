@@ -1,10 +1,10 @@
 var RC = require('ringcentral')
 var fs = require('fs')
-var accessToken =  'wzbcGXINJ33755:^%wtaMY*'
+///var accessToken =  'wzbcGXINJ33755:^%wtaMY*'
 const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
-var redis = require('redis').createClient(process.env.REDIS_URL);
+//var redis = require('redis').createClient(process.env.REDIS_URL);
 
 // Read a token from the environment variables
 const token = process.env.SLACK_TOKEN;
