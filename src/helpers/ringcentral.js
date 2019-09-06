@@ -234,6 +234,7 @@ function readExtensionCallLogs(extensionId, startTime, stopTime){
         saveAudioFile(record)
       },
       function(err){
+        console.log(err)
         console.log("No call with call recording within this period of time.")
       }
     );
