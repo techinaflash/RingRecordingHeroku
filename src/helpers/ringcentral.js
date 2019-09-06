@@ -111,7 +111,7 @@ function subscribeForNotification(){
       if(err)
         console.log(err);
       else
-        console.log("SubscriptionId " + json.id + " is stpred.");
+        console.log("SubscriptionId " + json.id + " is stored.");
       }); 
    })
    .catch(function(e){

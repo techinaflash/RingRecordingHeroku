@@ -39,9 +39,9 @@ app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 app.post('/slack/events', (req, res) => {
   //console.log(req)
   const payload = JSON.parse(req.body.payload);
-  console.log('******************PAYLOAD START*************************')
+  /* console.log('******************PAYLOAD START*************************')
   console.log(payload)
-  console.log('******************PAYLOAD END*************************')
+  console.log('******************PAYLOAD END*************************') */
   const {type, user, message, submission} = payload;
   
 
@@ -49,8 +49,8 @@ app.post('/slack/events', (req, res) => {
     // Get user info of the person who posted the original message from the payload
     const getUserInfo = new Promise((resolve, reject) => {
       users.find(payload.user.id).then((result) => {
-        console.log('**********USER FIND RESULT*****************')
-        console.log(result)
+        /* console.log('**********USER FIND RESULT*****************')
+        console.log(result) */
         resolve(result.data.user.real_name);
       }).catch((err) => { reject(err); });
     });
@@ -64,7 +64,7 @@ app.post('/slack/events', (req, res) => {
 
     // Once successfully get the user info, open a dialog with the info
     getUserInfo.then((userInfoResult) => {
-      console.log(userInfoResult)
+      //console.log(userInfoResult)
       slack.openDialog(payload, userInfoResult).then((result) => {
         if(result.data.error) {
           console.log(result.data);
