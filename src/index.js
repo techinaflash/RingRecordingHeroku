@@ -15,8 +15,10 @@ const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
 //const signature = require('./helpers/verifySignature');
 const slack = require('./helpers/slack');
-
+const syncro = require('./helpers/syncro');
 //const apiUrl = 'https://slack.com/api';
+
+
 
 let bot = require('./bot')
 

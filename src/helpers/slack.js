@@ -54,7 +54,7 @@ const openDialog = (payload, real_name) => {
     const ephemeralData = {
       token: process.env.SLACK_ACCESS_TOKEN,
       channel: payload.channel.id,
-      text: 'File uploaded to ticket' + payload.submission.ticket,
+      text: 'File uploaded to ticket ' + payload.submission.ticket,
       thread_ts: payload.state,
       user: payload.user.id,
       attachments: JSON.stringify({
