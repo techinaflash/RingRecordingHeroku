@@ -83,7 +83,7 @@ function checkExistingSubscription(){
     }else{
       removeRegisteredSubscription(id)
     }
-    console.log('GET result ->' + result);
+    console.log('GET result ->' + id);
   });
   
 }
