@@ -4,7 +4,15 @@ var fs = require('fs')
 const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
-//var redis = require('redis').createClient(process.env.REDIS_URL);
+var redisclient = require('redis').createClient(process.env.REDIS_URL);
+
+//connect to redis client
+redisclient.on('connect', function() {
+  console.log('Redis client connected');
+});
+client.on('error', function (err) {
+  console.log('Something went wrong ' + err);
+});
 
 // Read a token from the environment variables
 const token = process.env.SLACK_TOKEN;
@@ -69,13 +77,15 @@ function login(){
 }
 
 function checkExistingSubscription(){
-  fs.readFile('subscriptionId.txt', 'utf8', function (err, id) {
+  redisclient.get('rc_subscription_id', function (err, id) {
     if (err) {
       subscribeForNotification()
     }else{
       removeRegisteredSubscription(id)
     }
+    console.log('GET result ->' + result);
   });
+  
 }
 
 function removeRegisteredSubscription(id) {
@@ -97,12 +107,12 @@ function subscribeForNotification(){
    .then(function(resp){
      console.log('Ready for getting account presense events')
      var json = resp.json();
-     fs.writeFile("subscriptionId.txt", json.id, function(err) {
-     if(err)
-       console.log(err);
-     else
-       console.log("SubscriptionId " + json.id + " is saved.");
-     });
+     client.set('rc_subscription_id', json.id, function(err) {
+      if(err)
+        console.log(err);
+      else
+        console.log("SubscriptionId " + json.id + " is stpred.");
+      }); 
    })
    .catch(function(e){
      throw e
