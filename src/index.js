@@ -16,6 +16,7 @@ const exportNote = require('./helpers/exportNote');
 //const signature = require('./helpers/verifySignature');
 const slack = require('./helpers/slack');
 const syncro = require('./helpers/syncro');
+var ringcentral = require('./helpers/ringcentral');
 //const apiUrl = 'https://slack.com/api';
 
 
