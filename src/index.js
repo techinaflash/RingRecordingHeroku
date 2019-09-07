@@ -93,6 +93,7 @@ app.get('/test', (req, res) => {
     })
     console.log(result)
  })
+})
 
 app.post('/slack/events', (req, res) => {
   //console.log(req)
