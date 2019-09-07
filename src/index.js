@@ -34,7 +34,7 @@ if (config('PROXY_URI')) {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => { res.sendfile("index.html") })
+app.get('/', (req, res) => { res.sendfile('./src/index.html') })
 
 app.get('/test', (req, res) => {
 

@@ -95,6 +95,7 @@ function removeRegisteredSubscription(id) {
       subscribeForNotification()
     })
     .catch(function(e) {
+      console.log('Cannot delete subscription id' + id)
       console.error(e.toString());
       subscribeForNotification()
     });
