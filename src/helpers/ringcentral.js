@@ -329,7 +329,7 @@ function saveAudioFile(record){
                           "text": {
                               "type": "plain_text",
                               "emoji": true,
-                              "text": "Cancel\"
+                              "text": "Cancel"
                           },
                           "style": "danger",
                           "value": "click_me_123"
