@@ -47,7 +47,7 @@ const openDialog = (payload, real_name) => {
   };
   //END OPEN DIALOG
 
-  const postMessage = () => {
+  const postMessage = (payload) => {
     const messageData = {
       //filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
       // You can use a ReadableStream or a Buffer for the file option
@@ -140,4 +140,4 @@ const openDialog = (payload, real_name) => {
   };
   //END POST EPHEMERAL
 
-module.exports = { openDialog, postEphemeral };
+module.exports = { openDialog, postEphemeral, postMessage };

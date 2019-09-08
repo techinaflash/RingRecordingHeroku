@@ -38,7 +38,8 @@ app.get('/', (req, res) => { res.sendfile('./src/index.html') })
 
 app.get('/test', (req, res) => {
   console.log('Starting Test')
-  slack.postMessage();
+  const test = slack.postMessage();
+  console.log(test)
 })
 
 app.post('/slack/events', (req, res) => {
