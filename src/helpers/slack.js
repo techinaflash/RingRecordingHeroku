@@ -105,7 +105,7 @@ const openDialog = (payload, real_name) => {
       ]
       };
 
-      const promise = axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(messaeData));
+      const promise = axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(messageData));
     return promise;
   }
 
