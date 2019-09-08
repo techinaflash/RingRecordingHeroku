@@ -262,7 +262,30 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //console.log(response.data.customers);
-        (async () => {
+      var creds = {
+        username: process.env.SP_USERNAME,
+        password: process.env.SP_PASSWORD
+      };
+      var fileOpts = {
+        folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
+        fileName: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'),
+        fileContent: buffer
+      };
+  
+      var coreOpts = {
+        siteUrl: process.env.SP_DOMAIN
+      };
+
+      spsave(coreOpts, creds, fileOpts)
+      .then(function(data){
+          console.log('File uploaded!');
+          console.log(data);
+      })
+      .catch(function(err){
+          console.log('Error occurred');
+      });
+      
+      (async () => {
         // Just use the `file` argument as the documentation suggests
         // See: https://api.slack.com/methods/files.upload
         const result = await web.chat.postMessage({
@@ -296,7 +319,7 @@ function saveAudioFile(record){
                           "text": {
                               "type": "plain_text",
                               "emoji": true,
-                              "text": "Approve"
+                              "text": "Upload"
                           },
                           "style": "primary",
                           "value": "click_me_123"
@@ -306,7 +329,7 @@ function saveAudioFile(record){
                           "text": {
                               "type": "plain_text",
                               "emoji": true,
-                              "text": "Deny"
+                              "text": "Cancel\"
                           },
                           "style": "danger",
                           "value": "click_me_123"
@@ -317,36 +340,17 @@ function saveAudioFile(record){
         })
 
 
-/*         const result = await web.files.upload({
+        const result = await web.files.upload({
         filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
         // You can use a ReadableStream or a Buffer for the file option
         // This file is located in the current directory (`process.pwd()`), so the relative path resolves
         file: buffer,
+        threat_ts: result.ts,
         channels: conversationId,
         initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
-        }) */
+        })
         
-        var creds = {
-          username: process.env.SP_USERNAME,
-          password: process.env.SP_PASSWORD
-      };
-      var fileOpts = {
-        folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
-        fileName: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'),
-        fileContent: buffer
-      };
-  
-      var coreOpts = {
-          siteUrl: process.env.SP_DOMAIN
-      };
-
-      spsave(coreOpts, creds, fileOpts)
-    .then(function(data){
-        console.log('File uploaded!');
-    })
-    .catch(function(err){
-        console.log('Error occurred');
-    });
+     
 
         // `res` contains information about the uploaded file
         console.log('Result from Slack message: ', result);
