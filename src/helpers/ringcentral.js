@@ -340,7 +340,7 @@ function saveAudioFile(record){
         })
 
 
-        const result = await web.files.upload({
+        const uploadResult = await web.files.upload({
         filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
         // You can use a ReadableStream or a Buffer for the file option
         // This file is located in the current directory (`process.pwd()`), so the relative path resolves
