@@ -5,6 +5,9 @@ const qs = require('qs');
 
 const apiUrl = 'https://slack.com/api';
 
+// This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
+const conversationId = 'CBAM8P0EQ';
+
 /*
  *  Get user info from users.info method
  */
