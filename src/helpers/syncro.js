@@ -40,12 +40,11 @@ const callerID = (payload, direction) => {
 
   function uploadFile (ticketID, downloadUrl){
     //console.log()
-    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', {
-      params: {
-        api_key: api_key,
-        url: downloadUrl
-      }
-    })
+    const parameters = {
+      api_key: api_key,
+      url: downloadUrl
+    } 
+    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', parameters)
     .catch(function (error) {
       console.log(error);
     }); 
