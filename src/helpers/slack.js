@@ -9,6 +9,8 @@ const token = process.env.SLACK_USER_TOKEN;
 
 const apiUrl = 'https://slack.com/api';
 
+const ftpUrl = 'https://files.techinaflash.net/';
+
 // Initialize
 const web = new WebClient(token);
 
@@ -23,7 +25,7 @@ const conversationId = 'CBAM8P0EQ';
 // open the dialog by calling dialogs.open method and sending the payload
 const openDialog = (payload, real_name) => {
 
-    console.log(payload.message.files[0].permalink_public)
+    console.log(payload.message.files[0])
 
   makeFilePublic (payload.message.files[0].id)
 
@@ -35,7 +37,7 @@ const openDialog = (payload, real_name) => {
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
-        state: payload.message.files[0].permalink_public,
+        state: ftpUrl + payload.message.files[0].filename,
         callback_id: 'upload_to_syncro',
         submit_label: 'Upload',
         elements: [
