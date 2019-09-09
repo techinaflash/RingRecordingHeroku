@@ -73,7 +73,7 @@ const callerID = (payload, direction) => {
      }
     })
    .then(response => {
-     console.log(response.data.tickets);
+     //console.log(response.data.tickets);
      return response.data.tickets
    })
    .catch(error => console.log(error));

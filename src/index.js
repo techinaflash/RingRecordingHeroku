@@ -18,6 +18,7 @@ const slack = require('./helpers/slack');
 const syncro = require('./helpers/syncro');
 var ringcentral = require('./helpers/ringcentral');
 //const apiUrl = 'https://slack.com/api';
+//var async = require("async");
 
 
 
@@ -79,16 +80,29 @@ app.post('/slack/events', (req, res) => {
       // Slack know the command was received
       res.send('');
       
-      //Add upload to syncro
-      const ticketData = syncro.ticketNumberToID(submission.ticket)
+  
+      axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
+        params: {
+         api_key: process.env.SYNCRO_API_KEY,
+         number: submission.ticket
+        }
+       })
+      .then(response => {
+        //console.log(response.data.tickets);
+        //return response.data.tickets
+        console.log('Result of Ticket Number to ID -> ' + response.data.tickets)
+        syncro.uploadFile(response.data.tickets[0].id, payload.state)
+        syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+      })
+      .catch(error => console.log(error));
       
-      console.log('Result of Ticket Number to ID -> ' + ticketData)
-      syncro.uploadFile(ticketData[0].id, payload.state)
-      syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+      
+      //console.log('Result of Ticket Number to ID -> ' + ticketData)
+      
   
       
       // DM the user a confirmation message
-      slack.postEphemeral(payload);
+      //slack.postEphemeral(payload);
 
       //Delete FTP file after successful upload to syncro
 
