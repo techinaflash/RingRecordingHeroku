@@ -91,7 +91,7 @@ app.post('/slack/events', (req, res) => {
         //syncro.uploadFile(response.data.tickets[0].id, payload.state)
         syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
       
-      .catch(error => console.log(error));
+      //.catch(error => console.log(error));
       
       
       //console.log('Result of Ticket Number to ID -> ' + ticketData)
