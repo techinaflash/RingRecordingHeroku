@@ -25,7 +25,7 @@ const callerID = (payload, direction) => {
   }
 
   function commentTicket (ticketNumber, tech, comment){
-    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
+    const promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
       params: {
         api_key: api_key,
         hidden: '1',
@@ -34,34 +34,19 @@ const callerID = (payload, direction) => {
         //tech: tech,
         subject: 'Call Recording Log'
       }
-    })
-    .then(function (result) {
-      console.log('**************************Result of commentTicket ->' + result)
-      return result[0]
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
-
-
+    });
+    return promise;
   }
 
-  function uploadFile (ticketNumber, url){
-    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/attach_file_url', {
+  function uploadFile (ticketID, downloadUrl){
+    const promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', {
       params: {
         api_key: api_key,
-        url: url
+        url: downloadUrl
       }
-    })
-    .then(function (result) {
-      console.log('**************************Result of uploadFile ->' + JSON.parse(result))
-      return result
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
+    });
 
-
+    return promise;
   }
 
   function ticketNumberToID(ticketNumber){
@@ -70,9 +55,6 @@ const callerID = (payload, direction) => {
       api_key: api_key,
       number: ticketNumber
      } */
-    
-   
-
     const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
       params: {
         api_key: api_key,
