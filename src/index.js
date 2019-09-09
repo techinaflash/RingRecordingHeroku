@@ -80,6 +80,8 @@ app.post('/slack/events', (req, res) => {
       res.send('');
       
       //Add upload to syncro
+      const ticketNumber = syncro.ticketNumberToID(submission.ticket)
+      
       const uploadResult = syncro.uploadFile(submission.ticket, payload.state)
       const commentResult = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
   

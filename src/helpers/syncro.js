@@ -63,4 +63,20 @@ const callerID = (payload, direction) => {
 
 
   }
-module.exports = { commentTicket, uploadFile };
+
+  function ticketNumberToID(ticketNumber){
+    axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
+      params: {
+        api_key: api_key,
+        number: ticketNumber
+      }
+    })
+    .then(function (result) {
+      console.log('Result of ticketNumberToID ->' + result[0])
+      return result
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
+  }
+module.exports = { commentTicket, uploadFile, ticketNumberToID };
