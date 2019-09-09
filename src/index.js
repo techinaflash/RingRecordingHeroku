@@ -83,8 +83,12 @@ app.post('/slack/events', (req, res) => {
       const uploadResult = syncro.uploadFile(submission.ticket, payload.state)
       const commentResult = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
   
+      console.log('Syncro upload result ->' + uploadResult)
       // DM the user a confirmation message
       slack.postEphemeral(payload);
+
+      //Delete FTP file after successful upload to syncro
+
     }
 
     
