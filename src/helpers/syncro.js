@@ -73,8 +73,8 @@ const callerID = (payload, direction) => {
      }
     })
    .then(response => {
-     console.log('Response from Convert to ticket' + response);
-     return response
+     console.log(response.data.tickets);
+     return response.data.tickets
    })
    .catch(error => console.log(error));
   
