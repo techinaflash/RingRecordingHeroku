@@ -277,9 +277,9 @@ function saveAudioFile(record){
       };
 
       spsave(coreOpts, creds, fileOpts)
-      .then(function(data){
+      .then(function(spsaveData){
           console.log('File uploaded!');
-          console.log(data);
+          console.log(spsaveData);
       })
       .catch(function(err){
           console.log('Error occurred');
@@ -288,7 +288,7 @@ function saveAudioFile(record){
       (async () => {
         // Just use the `file` argument as the documentation suggests
         // See: https://api.slack.com/methods/files.upload
-        const result = await web.chat.postMessage({
+        /* const result = await web.chat.postMessage({
           text: 'text',
           channel: conversationId,
           blocks: [
@@ -296,14 +296,78 @@ function saveAudioFile(record){
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "You have a new call recording:\n*<google.com|Fred Enriquez - Time Off request>*"
+                      "text": 'You have a new call recording:\n*<https://techinaflash.sharepoint.com/sites/TechinaFlash/Shared%20Documents/General/Call%20Log/Customers/' + response.data.customers[0].business_and_full_name. + '|' + response.data.customers[0].business_and_full_name +' - Call recording>*'
                   }
               },
               {
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "*Type:*\nPaid time off\n*When:*\nAug 10-Aug 13\n*Hours:* 16.0 (2 days)\n*Remaining balance:* 32.0 hours (4 days)\n*Comments:* \"Family in town, going camping!\""
+                      "text": '*Direction:*\n' + record.direction + '\n*When:*\n' + record.startTime + '\n*Comments:*\nCall recording comments'
+                  },
+                  "accessory": {
+                      "type": "image",
+                      "image_url": "https://api.slack.com/img/blocks/bkb_template_images/approvalsNewDevice.png",
+                      "alt_text": "computer thumbnail"
+                  }
+              },
+              {
+                  "type": "actions",
+                  "elements": [
+                      {
+                          "type": "button",
+                          "text": {
+                              "type": "plain_text",
+                              "emoji": true,
+                              "text": "Upload"
+                          },
+                          "style": "primary",
+                          "value": "click_me_123"
+                      },
+                      {
+                          "type": "button",
+                          "text": {
+                              "type": "plain_text",
+                              "emoji": true,
+                              "text": "Cancel"
+                          },
+                          "style": "danger",
+                          "value": "click_me_123"
+                      }
+                  ]
+              }
+          ]
+        }) */
+
+
+        const result = await web.files.upload({
+        filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
+        // You can use a ReadableStream or a Buffer for the file option
+        // This file is located in the current directory (`process.pwd()`), so the relative path resolves
+        file: buffer,
+        filetyp: mp3,
+        channels: conversationId,
+        initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
+        })
+        console.log('Result from Slack file upload: ', result);
+
+        const updateResult = await web.chat.update({
+          text: 'text',
+          ts: result.ts,
+          channel: conversationId,
+          blocks: [
+              {
+                  "type": "section",
+                  "text": {
+                      "type": "mrkdwn",
+                      "text": 'You have a new call recording:\n*<https://techinaflash.sharepoint.com/sites/TechinaFlash/Shared%20Documents/General/Call%20Log/Customers/' + response.data.customers[0].business_and_full_name. + '|' + response.data.customers[0].business_and_full_name +' - Call recording>*'
+                  }
+              },
+              {
+                  "type": "section",
+                  "text": {
+                      "type": "mrkdwn",
+                      "text": '*Direction:*\n' + record.direction + '\n*When:*\n' + record.startTime + '\n*Comments:*\nCall recording comments'
                   },
                   "accessory": {
                       "type": "image",
@@ -338,22 +402,10 @@ function saveAudioFile(record){
               }
           ]
         })
-
-
-        const uploadResult = await web.files.upload({
-        filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
-        // You can use a ReadableStream or a Buffer for the file option
-        // This file is located in the current directory (`process.pwd()`), so the relative path resolves
-        file: buffer,
-        thread_ts: result.ts,
-        channels: conversationId,
-        initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
-        })
-        
      
 
         // `res` contains information about the uploaded file
-        console.log('Result from Slack message: ', result);
+        console.log('Result from Slack message: ', updateResult);
       })();
     })
     .catch(function (error) {
