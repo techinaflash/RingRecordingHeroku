@@ -81,7 +81,7 @@ app.post('/slack/events', (req, res) => {
       // Slack know the command was received
       res.send('');
       
-     
+      syncro.uploadFile('5059090', 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
         syncro.ticketNumberToID(submission.ticket).then((result) => {
           //console.log('ticketNumberToID Result')
           console.log('Ticket ID is -> ' + result.data.tickets[0].id)
@@ -89,14 +89,14 @@ app.post('/slack/events', (req, res) => {
           return (result.data.tickets[0].id);
           
           //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-        }).then((result) => {
+        //}).then((result) => {
           //syncro.uploadFile(result, payload.state)
         }).catch((err) => {
           console.log('*****************Error**********************')
           console.log(err)
         });
 
-        syncro.uploadFile('5059090', 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
+        
       
         //console.log(response.data.tickets);
         //return response.data.tickets
