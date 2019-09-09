@@ -72,7 +72,7 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of ticketNumberToID ->' + result[0])
+      console.log('Result of ticketNumberToID ->' + result)
       return result
     })
     .catch(function (error) {
