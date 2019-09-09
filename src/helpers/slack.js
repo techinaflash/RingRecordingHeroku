@@ -16,6 +16,8 @@ const conversationId = 'CBAM8P0EQ';
 // open the dialog by calling dialogs.open method and sending the payload
 const openDialog = (payload, real_name) => {
 
+    console.log(payload.message.files)
+
     if (payload.message.files){
       var filePayload = payload.message.files     
     }

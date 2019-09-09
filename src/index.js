@@ -48,7 +48,7 @@ app.post('/slack/events', (req, res) => {
   console.log('******************PAYLOAD START*************************')
   console.log(payload)
   console.log('******************PAYLOAD END*************************')
-  console.log(payload.message.files)
+  
   const {type, user, message, submission} = payload;
   
 
