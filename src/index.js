@@ -81,20 +81,16 @@ app.post('/slack/events', (req, res) => {
       // Slack know the command was received
       res.send('');
       
-  
-      axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
-        params: {
-         api_key: process.env.SYNCRO_API_KEY,
-         number: submission.ticket
-        }
-       })
-      .then(response => {
+      syncro.ticketNumberToID(submission.ticket).then((result) => {
+        console.log(result)
+      }).catch((err) => {console.log(err)});
+      
         //console.log(response.data.tickets);
         //return response.data.tickets
-        console.log('Result of Ticket Number to ID -> ' + response.data.tickets)
+        //console.log('Result of Ticket Number to ID -> ' + response.data.tickets)
         //syncro.uploadFile(response.data.tickets[0].id, payload.state)
         syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-      })
+      
       .catch(error => console.log(error));
       
       

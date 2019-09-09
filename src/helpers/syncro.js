@@ -66,17 +66,15 @@ const callerID = (payload, direction) => {
 
   function ticketNumberToID(ticketNumber){
     console.log('Convert Ticket number ->' + ticketNumber)
-     axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
-     params: {
+     const requestData = {
       api_key: api_key,
       number: ticketNumber
      }
-    })
-   .then(response => {
-     //console.log(response.data.tickets);
-     return response.data.tickets
-   })
-   .catch(error => console.log(error));
+    
+   
+
+    const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', qs.stringify(requestData));
+    return promise;
   
   }
 
