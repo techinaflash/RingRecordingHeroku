@@ -360,7 +360,7 @@ function saveAudioFile(record){
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": 'You have a new call recording:\n*<https://techinaflash.sharepoint.com/sites/TechinaFlash/Shared%20Documents/General/Call%20Log/Customers/' + response.data.customers[0].business_and_full_name. + '|' + response.data.customers[0].business_and_full_name +' - Call recording>*'
+                      "text": 'You have a new call recording:\n*<https://techinaflash.sharepoint.com/sites/TechinaFlash/Shared%20Documents/General/Call%20Log/Customers/' + response.data.customers[0].business_and_full_name + '|' + response.data.customers[0].business_and_full_name +' - Call recording>*'
                   }
               },
               {
