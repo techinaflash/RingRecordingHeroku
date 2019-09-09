@@ -5,7 +5,7 @@ const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
 var redisclient = require('redis').createClient(process.env.REDIS_URL);
-var ftpClient = require('jsftp');
+var jsftp = require('jsftp');
 
 //connect to redis client
 redisclient.on('connect', function() {
@@ -19,7 +19,7 @@ redisclient.on('error', function (err) {
 const token = process.env.SLACK_TOKEN;
 
 //Build FTP Connector
-const ftpClient = new jsftp({
+const Ftp = new jsftp({
   host: "files.techinaflash.net",
   port: 21, // defaults to 21
   user: "slackbot@files.techinaflash.net", // defaults to "anonymous"
@@ -296,7 +296,7 @@ function saveAudioFile(record){
       });
 
       //Save to FTP
-      ftp.put(buffer, recFilename, err => {
+      Ftp.put(buffer, recFilename, err => {
         if (!err) {
           console.log("File transferred successfully!");
         }
