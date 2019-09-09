@@ -76,7 +76,7 @@ const callerID = (payload, direction) => {
     const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
       params: {
         api_key: api_key,
-        number: url
+        number: ticketNumber
       }
     });
     return promise;
