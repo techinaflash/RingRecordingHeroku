@@ -18,9 +18,9 @@ const openDialog = (payload, real_name) => {
 
     console.log(payload.message.files[0].id)
 
-    var publicFileResponse = makeFilePublic (payload.message.files[0].id)
+  makeFilePublic (payload.message.files[0].id)
 
-    console.log(publicFileResponse)
+   
     
 
     const dialogData = {
@@ -156,9 +156,17 @@ const openDialog = (payload, real_name) => {
       file: fileid
     }
 
-
-    const promise = axios.post(`${apiUrl}/files.sharedPublicURL`, qs.stringify(fileData));
-    return promise;
+    axios({
+      method: 'post',
+      url: `${apiUrl}/files.sharedPublicURL`,
+      data: qs.stringify(fileData)
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   function makeFilePrivate(fileid) {
