@@ -51,27 +51,19 @@ app.post('/slack/events', (req, res) => {
   
   const {type, user, message, submission} = payload;
   
-
-  if(type === 'message_action') {
-    // Get user info of the person who posted the original message from the payload
-    const getUserInfo = new Promise((resolve, reject) => {
-      users.find(payload.user.id).then((result) => {
-        /* console.log('**********USER FIND RESULT*****************')
-        console.log(result) */
-        resolve(result.data.user.real_name);
-      }).catch((err) => { reject(err); });
-    });
-
-    /*
-    if (!signature.isVerified(req)) {
-      console.log('Signature is not Verified');
-      //res.sendStatus(404);
-      //return;
-    }*/
-
-    // Once successfully get the user info, open a dialog with the info
-    getUserInfo.then((userInfoResult) => {
-      //console.log(userInfoResult)
+  // Get user info of the person who interacted with slack
+  const getUserInfo = new Promise((resolve, reject) => {
+    users.find(payload.user.id).then((result) => {
+      /* console.log('**********USER FIND RESULT*****************')
+      console.log(result) */
+      resolve(result.data.user.real_name);
+    }).catch((err) => { reject(err); });
+  });
+  
+  // Once successfully get the user info, open a dialog with the info
+  getUserInfo.then((userInfoResult) => {
+    //console.log(userInfoResult)
+    if(type === 'message_action') {
       slack.openDialog(payload, userInfoResult).then((result) => {
         if(result.data.error) {
           console.log(result.data);
@@ -82,19 +74,25 @@ app.post('/slack/events', (req, res) => {
       }).catch((err) => {
         res.sendStatus(500);
       });
+    } else if (type === 'dialog_submission') {
+      // immediately respond with a empty 200 response to let
+      // Slack know the command was received
+      res.send('');
+      
+      //Add upload to syncro
+      const uploadResult = sycro.uploadResult(submission.ticket, payload.state)
+      const commentResult = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+  
+      // DM the user a confirmation message
+      slack.postEphemeral(payload);
+    }
 
-    })
-    .catch((err) => { console.error(err); });
+    
 
-  } else if (type === 'dialog_submission') {
-    // immediately respond with a empty 200 response to let
-    // Slack know the command was received
-    res.send('');
-    // create a ClipIt and prepare to export it to the theoritical external app
-    //exportNote.exportToJson(user.id, submission);
-    // DM the user a confirmation message
-    slack.postEphemeral(payload);
-  }
+  })
+  .catch((err) => { console.error(err); });
+
+  
 });
 
 app.post('/commands/starbot', (req, res) => {
