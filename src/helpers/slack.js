@@ -32,7 +32,7 @@ const openDialog = (payload, real_name) => {
 
     const dialogData = {
       token: process.env.SLACK_ACCESS_TOKEN,
-      state: payload.message.files[0].permalink_public,
+      state: payload.message.files[0].file.permalink_public,
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
