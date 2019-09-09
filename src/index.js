@@ -81,15 +81,20 @@ app.post('/slack/events', (req, res) => {
       // Slack know the command was received
       res.send('');
       
-      syncro.ticketNumberToID(submission.ticket).then((result) => {
-        //console.log('ticketNumberToID Result')
-        console.log('Ticket ID is -> ' + result.data.tickets[0].id)
-        syncro.uploadFile(result.data.tickets[0].id, payload.state)
-        //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-      }).catch((err) => {
-        console.log('*****************Error**********************')
-        console.log(err)
-      });
+     
+        syncro.ticketNumberToID(submission.ticket).then((result) => {
+          //console.log('ticketNumberToID Result')
+          console.log('Ticket ID is -> ' + result.data.tickets[0].id)
+          console.log('State from dialog is -> ' + payload.state)
+          return (result.data.tickets[0].id);
+          
+          //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+        }).then((result) => {
+          syncro.uploadFile(result, payload.state)
+        }).catch((err) => {
+          console.log('*****************Error**********************')
+          console.log(err)
+        });
       
         //console.log(response.data.tickets);
         //return response.data.tickets

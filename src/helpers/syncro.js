@@ -39,7 +39,7 @@ const callerID = (payload, direction) => {
   }
 
   function uploadFile (ticketID, downloadUrl){
-    console.log()
+    //console.log()
     axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', {
       params: {
         api_key: api_key,
