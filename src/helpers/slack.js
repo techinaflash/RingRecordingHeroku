@@ -16,9 +16,13 @@ const conversationId = 'CBAM8P0EQ';
 // open the dialog by calling dialogs.open method and sending the payload
 const openDialog = (payload, real_name) => {
 
+    if (payload.message.files){
+      var filePayload = payload.message.files     
+    }
+
     const dialogData = {
       token: process.env.SLACK_ACCESS_TOKEN,
-      state: payload.message_ts,
+      state: filePayload,
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
