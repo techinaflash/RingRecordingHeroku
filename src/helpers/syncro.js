@@ -65,10 +65,10 @@ const callerID = (payload, direction) => {
   }
 
   function ticketNumberToID(ticketNumber){
-    params = {
+    params = JSON.stringify({
       api_key: api_key,
       number: ticketNumber
-    }
+    });
     
     const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', qs.stringify(params));
     return promise;
