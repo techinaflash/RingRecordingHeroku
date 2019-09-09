@@ -28,11 +28,11 @@ const callerID = (payload, direction) => {
     axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
       params: {
         api_key: api_key,
-        comment_hidden: '1',
-        comment_do_not_email: '1',
-        comment_body: comment,
-        comment_tech: tech,
-        comment_subject: 'Call Recording Log'
+        hidden: '1',
+        do_not_email: '1',
+        body: comment,
+        tech: tech,
+        subject: 'Call Recording Log'
       }
     })
     .then(function (result) {
