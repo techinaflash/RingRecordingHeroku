@@ -16,15 +16,16 @@ const conversationId = 'CBAM8P0EQ';
 // open the dialog by calling dialogs.open method and sending the payload
 const openDialog = (payload, real_name) => {
 
-    console.log(payload.message.files)
+    //console.log(payload.message.files)
 
-    if (payload.message.files){
-      var filePayload = payload.message.files     
-    }
+    var publicFileResponse = makeFilePublic (payload.message.files[0].id)
+
+    console.log(publicFileResponse)
+    
 
     const dialogData = {
       token: process.env.SLACK_ACCESS_TOKEN,
-      state: filePayload,
+      state: payload.message.files[0].permalink_public,
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
@@ -149,4 +150,26 @@ const openDialog = (payload, real_name) => {
   };
   //END POST EPHEMERAL
 
+  function makeFilePublic(fileid) {
+    const fileData = {
+      token: process.env.SLACK_ACCESS_TOKEN,
+      file: fileid
+    }
+
+
+    const promise = axios.post(`${apiUrl}/files.sharedPublicURL`, qs.stringify(fileData));
+    return promise;
+  }
+
+  function makeFilePrivate(fileid) {
+    const fileData = {
+      token: process.env.SLACK_ACCESS_TOKEN,
+      file: fileid
+    }
+
+
+    const promise = axios.post(`${apiUrl}/files.revokePublicURL`, qs.stringify(fileData));
+    return promise;
+  }
+  
 module.exports = { openDialog, postEphemeral, postMessage };
