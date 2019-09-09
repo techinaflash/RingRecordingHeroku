@@ -25,7 +25,7 @@ const callerID = (payload, direction) => {
   }
 
   function commentTicket (ticketNumber, tech, comment){
-    axios.get('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
+    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
       params: {
         api_key: api_key,
         comment_hidden: '1',

@@ -92,7 +92,7 @@ app.post('/slack/events', (req, res) => {
         //console.log(response.data.tickets);
         //return response.data.tickets
         console.log('Result of Ticket Number to ID -> ' + response.data.tickets)
-        syncro.uploadFile(response.data.tickets[0].id, payload.state)
+        //syncro.uploadFile(response.data.tickets[0].id, payload.state)
         syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
       })
       .catch(error => console.log(error));
@@ -117,7 +117,7 @@ app.post('/slack/events', (req, res) => {
   
 });
 
-app.post('/commands/starbot', (req, res) => {
+/* app.post('/commands/starbot', (req, res) => {
   let payload = req.body
 
   if (!payload || payload.token !== config('STARBOT_COMMAND_TOKEN')) {
@@ -133,7 +133,7 @@ app.post('/commands/starbot', (req, res) => {
   }, helpCommand)
 
   cmd.handler(payload, res)
-})
+}) */
 
 
 
