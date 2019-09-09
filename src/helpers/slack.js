@@ -16,7 +16,7 @@ const conversationId = 'CBAM8P0EQ';
 // open the dialog by calling dialogs.open method and sending the payload
 const openDialog = (payload, real_name) => {
 
-    //console.log(payload.message.files)
+    console.log(payload.message.files[0].id)
 
     var publicFileResponse = makeFilePublic (payload.message.files[0].id)
 
@@ -168,8 +168,18 @@ const openDialog = (payload, real_name) => {
     }
 
 
-    const promise = axios.post(`${apiUrl}/files.revokePublicURL`, qs.stringify(fileData));
-    return promise;
+    axios({
+      method: 'post',
+      url: `${apiUrl}/files.revokePublicURL`,
+      data: qs.stringify(fileData)
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   }
   
 module.exports = { openDialog, postEphemeral, postMessage };
