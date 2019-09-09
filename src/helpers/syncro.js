@@ -50,7 +50,7 @@ const callerID = (payload, direction) => {
     axios.get('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/attach_file_url', {
       params: {
         api_key: api_key,
-        url: url
+        url: 'http://' + url
       }
     })
     .then(function (result) {

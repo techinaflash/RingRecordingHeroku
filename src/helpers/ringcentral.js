@@ -271,7 +271,7 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //console.log(response.data.customers);
-      const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
+      const recFilename = (response.data.customers[0].business_and_full_name + '_' + record.direction + '_' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
 
       var creds = {
         username: process.env.SP_USERNAME,

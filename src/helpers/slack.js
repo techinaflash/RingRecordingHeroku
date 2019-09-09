@@ -9,7 +9,7 @@ const token = process.env.SLACK_USER_TOKEN;
 
 const apiUrl = 'https://slack.com/api';
 
-const ftpUrl = 'https://files.techinaflash.net/';
+const ftpUrl = 'files.techinaflash.net/';
 
 // Initialize
 const web = new WebClient(token);
