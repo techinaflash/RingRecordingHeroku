@@ -36,8 +36,8 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of commentTicket ->' + result)
-      return result
+      console.log('Result of commentTicket ->' + result[0])
+      return result[0]
     })
     .catch(function (error) {
       console.log(error);
