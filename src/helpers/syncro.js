@@ -45,7 +45,10 @@ const callerID = (payload, direction) => {
         api_key: api_key,
         url: downloadUrl
       }
-    });
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
 
   }
 
