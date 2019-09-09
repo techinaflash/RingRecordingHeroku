@@ -83,7 +83,7 @@ app.post('/slack/events', (req, res) => {
       
       syncro.ticketNumberToID(submission.ticket).then((result) => {
         
-        console.log('ticketnumberToID result is ' + result)
+        console.log('ticketnumberToID result is ' + result.data)
       }).catch((err) => {
         console.log('*****************Error**********************')
         console.log(err)
