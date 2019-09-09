@@ -2,8 +2,15 @@
 
 const axios = require('axios');
 const qs = require('qs');
+const { WebClient } = require('@slack/web-api');
+
+// Read a token from the environment variables
+const token = process.env.SLACK_TOKEN;
 
 const apiUrl = 'https://slack.com/api';
+
+// Initialize
+const web = new WebClient(token);
 
 // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
 const conversationId = 'CBAM8P0EQ';
@@ -151,22 +158,10 @@ const openDialog = (payload, real_name) => {
   //END POST EPHEMERAL
 
   function makeFilePublic(fileid) {
-    const fileData = {
-      token: process.env.SLACK_ACCESS_TOKEN,
-      file: fileid
-    }
+    (async () => {
+      const result = await web.files.sharedPublicURL({file: fileid})
+    })
 
-    axios({
-      method: 'post',
-      url: `${apiUrl}/files.sharedPublicURL`,
-      data: qs.stringify(fileData)
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
   function makeFilePrivate(fileid) {
