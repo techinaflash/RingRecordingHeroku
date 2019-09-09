@@ -80,11 +80,11 @@ app.post('/slack/events', (req, res) => {
       res.send('');
       
       //Add upload to syncro
-      const ticketNumber = syncro.ticketNumberToID(submission.ticket)
+      const ticketData = syncro.ticketNumberToID(submission.ticket)
       
-      //console.log('Result of Ticket Number' + ticketNumber)
-      //syncro.uploadFile(submission.ticket, payload.state)
-      //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+      console.log('Result of Ticket Number to ID -> ' + ticketData)
+      syncro.uploadFile(ticketData[0].id, payload.state)
+      syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
   
       
       // DM the user a confirmation message
