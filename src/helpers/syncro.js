@@ -70,8 +70,13 @@ const callerID = (payload, direction) => {
       number: ticketNumber
     }
     
-    const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', qs.stringify(params));
-    return promise;
+   axios.get('https://supportit.syncromsp.com/api/v1/tickets/', qs.stringify(params))
+   .then(response => {
+     console.log(response);
+     return response
+   })
+   .catch(error => console.log(error));
+  
   }
 
 module.exports = { commentTicket, uploadFile, ticketNumberToID };
