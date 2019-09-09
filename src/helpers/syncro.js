@@ -27,7 +27,7 @@ const callerID = (payload, direction) => {
   function commentTicket (ticketNumber, tech, comment){
     axios.get('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
       params: {
-        api_key = api_key,
+        api_key: api_key,
         comment_hidden: '1',
         comment_do_not_email: '1',
         comment_body: comment,
@@ -49,7 +49,7 @@ const callerID = (payload, direction) => {
   function uploadFile (ticketNumber, url){
     axios.get('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/attach_file_url', {
       params: {
-        api_key = api_key,
+        api_key: api_key,
         url: url
       }
     })
