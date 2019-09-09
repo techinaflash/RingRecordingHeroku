@@ -257,7 +257,7 @@ function readExtensionCallLogs(extensionId, startTime, stopTime){
 
 
 function saveAudioFile(record){
-	const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
+	
   platform.get(record.recording.contentUri)
   .then(function(res) {
     return res.response().buffer();
@@ -271,6 +271,8 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //console.log(response.data.customers);
+      const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
+
       var creds = {
         username: process.env.SP_USERNAME,
         password: process.env.SP_PASSWORD
