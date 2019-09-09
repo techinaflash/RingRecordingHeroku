@@ -158,9 +158,13 @@ const openDialog = (payload, real_name) => {
   //END POST EPHEMERAL
 
   function makeFilePublic(fileid) {
-    (async () => {
-      const result = await web.files.sharedPublicURL({file: fileid})
+    web.files.sharedPublicURL({file: fileid})
+    .then(function (response) {
+      console.log(response);
     })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   }
 
