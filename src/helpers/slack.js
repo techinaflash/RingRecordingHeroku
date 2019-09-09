@@ -5,7 +5,7 @@ const qs = require('qs');
 const { WebClient } = require('@slack/web-api');
 
 // Read a token from the environment variables
-const token = process.env.SLACK_TOKEN;
+const token = process.env.SLACK_USER_TOKEN;
 
 const apiUrl = 'https://slack.com/api';
 
