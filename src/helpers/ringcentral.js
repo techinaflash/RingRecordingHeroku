@@ -345,7 +345,7 @@ function saveAudioFile(record){
         // You can use a ReadableStream or a Buffer for the file option
         // This file is located in the current directory (`process.pwd()`), so the relative path resolves
         file: buffer,
-        filetyp: mp3,
+        filetyp: 'mp3',
         channels: conversationId,
         initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
         })
