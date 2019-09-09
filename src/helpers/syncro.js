@@ -65,19 +65,13 @@ const callerID = (payload, direction) => {
   }
 
   function ticketNumberToID(ticketNumber){
-    axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
-      params: {
-        api_key: api_key,
-        number: ticketNumber
-      }
-    })
-    .then(function (result) {
-      console.log('************************Result of ticketNumberToID ->' + JSON.parse(result))
-      return result
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
+    params = {
+      api_key: api_key,
+      number: ticketNumber
+    }
+    
+    const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', qs.stringify(params));
+    return promise;
   }
 
 module.exports = { commentTicket, uploadFile, ticketNumberToID };
