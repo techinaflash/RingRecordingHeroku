@@ -36,7 +36,7 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of commentTicket ->' + result[0])
+      console.log('**************************Result of commentTicket ->' + JSON.parse(result))
       return result[0]
     })
     .catch(function (error) {
@@ -54,7 +54,7 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of uploadFile ->' + result)
+      console.log('**************************Result of uploadFile ->' + JSON.parse(result))
       return result
     })
     .catch(function (error) {
@@ -72,7 +72,7 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of ticketNumberToID ->' + result.object)
+      console.log('************************Result of ticketNumberToID ->' + JSON.parse(result))
       return result
     })
     .catch(function (error) {
