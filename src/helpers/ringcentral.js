@@ -5,6 +5,7 @@ const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
 var redisclient = require('redis').createClient(process.env.REDIS_URL);
+var ftpClient = require('jsftp');
 
 //connect to redis client
 redisclient.on('connect', function() {
@@ -16,6 +17,14 @@ redisclient.on('error', function (err) {
 
 // Read a token from the environment variables
 const token = process.env.SLACK_TOKEN;
+
+//Build FTP Connector
+const ftpClient = new jsftp({
+  host: "files.techinaflash.net",
+  port: 21, // defaults to 21
+  user: "slackbot@files.techinaflash.net", // defaults to "anonymous"
+  pass: process.env.SYNCRO_CALLERID_TOKEN // defaults to "@anonymous"
+});
 
 // Initialize
 const web = new WebClient(token);
@@ -248,7 +257,7 @@ function readExtensionCallLogs(extensionId, startTime, stopTime){
 
 
 function saveAudioFile(record){
-	
+	const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
   platform.get(record.recording.contentUri)
   .then(function(res) {
     return res.response().buffer();
@@ -268,7 +277,7 @@ function saveAudioFile(record){
       };
       var fileOpts = {
         folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
-        fileName: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'),
+        fileName: recFilename,
         fileContent: buffer
       };
   
@@ -276,6 +285,7 @@ function saveAudioFile(record){
         siteUrl: process.env.SP_DOMAIN
       };
 
+      //Save to Sharepoint
       spsave(coreOpts, creds, fileOpts)
       .then(function(spsaveData){
           console.log('File uploaded!');
@@ -284,6 +294,15 @@ function saveAudioFile(record){
       .catch(function(err){
           console.log('Error occurred');
       });
+
+      //Save to FTP
+      ftp.put(buffer, recFilename, err => {
+        if (!err) {
+          console.log("File transferred successfully!");
+        }
+      });
+
+
       
       (async () => {
         // Just use the `file` argument as the documentation suggests
