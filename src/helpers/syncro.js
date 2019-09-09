@@ -39,14 +39,14 @@ const callerID = (payload, direction) => {
   }
 
   function uploadFile (ticketID, downloadUrl){
-    const promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', {
+    console.log()
+    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', {
       params: {
         api_key: api_key,
         url: downloadUrl
       }
     });
 
-    return promise;
   }
 
   function ticketNumberToID(ticketNumber){
