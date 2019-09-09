@@ -72,11 +72,12 @@ const callerID = (payload, direction) => {
       }
     })
     .then(function (result) {
-      console.log('Result of ticketNumberToID ->' + result)
+      console.log('Result of ticketNumberToID ->' + result.object)
       return result
     })
     .catch(function (error) {
       console.log(error);
     }); 
   }
+
 module.exports = { commentTicket, uploadFile, ticketNumberToID };
