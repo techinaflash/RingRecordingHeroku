@@ -31,7 +31,7 @@ const callerID = (payload, direction) => {
         hidden: '1',
         do_not_email: '1',
         body: comment,
-        tech: tech,
+        //tech: tech,
         subject: 'Call Recording Log'
       }
     })
