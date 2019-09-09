@@ -5,7 +5,7 @@ const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
 var redisclient = require('redis').createClient(process.env.REDIS_URL);
-var jsftp = require('jsftp');
+///var jsftp = require('jsftp');
 
 //connect to redis client
 redisclient.on('connect', function() {
@@ -18,13 +18,13 @@ redisclient.on('error', function (err) {
 // Read a token from the environment variables
 const token = process.env.SLACK_TOKEN;
 
-//Build FTP Connector
+/* //Build FTP Connector
 const Ftp = new jsftp({
   host: "files.techinaflash.net",
   port: 21, // defaults to 21
   user: "slackbot@files.techinaflash.net", // defaults to "anonymous"
   pass: process.env.SYNCRO_CALLERID_TOKEN // defaults to "@anonymous"
-});
+}); */
 
 // Initialize
 const web = new WebClient(token);
@@ -271,7 +271,7 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //console.log(response.data.customers);
-      const recFilename = (response.data.customers[0].business_and_full_name + '_' + record.direction + '_' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
+      const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
 
       var creds = {
         username: process.env.SP_USERNAME,
@@ -297,12 +297,12 @@ function saveAudioFile(record){
           console.log('Error occurred');
       });
 
-      //Save to FTP
+   /*    //Save to FTP
       Ftp.put(buffer, recFilename, err => {
         if (!err) {
           console.log("File transferred successfully!");
         }
-      });
+      }); */
 
 
       
@@ -372,7 +372,7 @@ function saveAudioFile(record){
         })
         console.log('Result from Slack file upload: ', result);
 
-        const updateResult = await web.chat.update({
+        /* const updateResult = await web.chat.update({
           text: 'text',
           ts: result.ts,
           channel: conversationId,
@@ -422,11 +422,11 @@ function saveAudioFile(record){
                   ]
               }
           ]
-        })
+        }) */
      
 
         // `res` contains information about the uploaded file
-        console.log('Result from Slack message: ', updateResult);
+        //console.log('Result from Slack message: ', updateResult);
       })();
     })
     .catch(function (error) {

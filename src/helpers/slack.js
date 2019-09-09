@@ -27,9 +27,9 @@ const openDialog = (payload, real_name) => {
 
     console.log(payload.message.files[0])
 
-  makeFilePublic (payload.message.files[0].id)
+    makeFilePublic (payload.message.files[0].id)
 
-   
+    var publicDownloadURL = parsePublicFileURL(payload.message.files[0].url_private_download, payload.message.files[0].permalink_public)
     
 
     const dialogData = {
@@ -37,7 +37,7 @@ const openDialog = (payload, real_name) => {
       trigger_id: payload.trigger_id,
       dialog: JSON.stringify({
         title: 'Upload file to Syncro',
-        state: ftpUrl + payload.message.files[0].name,
+        state: publicDownloadURL,
         callback_id: 'upload_to_syncro',
         submit_label: 'Upload',
         elements: [
@@ -191,4 +191,10 @@ const openDialog = (payload, real_name) => {
     
   }
   
+  function parsePublicFileURL (privateURL, publicPermalink){
+    var n = publicPermalink.lastIndexOf('-');
+    var pub_secret = publicPermalink.substring(n + 1);
+    var publicDownloadURL = privateURL + '?pub_secret=' + pub_secret
+    return publicDownloadURL
+  }
 module.exports = { openDialog, postEphemeral, postMessage };
