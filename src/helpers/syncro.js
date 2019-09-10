@@ -31,7 +31,7 @@ const callerID = (payload, direction) => {
         do_not_email: '1',
         body: comment,
         //tech: tech,
-        subject: 'Call Recording Log'l
+        subject: 'Call Recording Log'
     } 
     var promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', parameters)
     .catch(function (error) {
