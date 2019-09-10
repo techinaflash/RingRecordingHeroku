@@ -133,7 +133,7 @@ const openDialog = (payload, real_name) => {
       token: process.env.SLACK_ACCESS_TOKEN,
       channel: payload.channel.id,
       text: 'File uploaded to ticket ' + payload.submission.ticket,
-      thread_ts: payload.state,
+      //thread_ts: payload.state,
       user: payload.user.id,
       attachments: JSON.stringify({
         title: 'Upload file to Syncro',
