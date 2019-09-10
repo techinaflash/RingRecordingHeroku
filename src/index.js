@@ -92,7 +92,8 @@ app.post('/slack/events', (req, res) => {
           //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
         }).then((result) => {
           console.log('Result is ->' + result.data)
-          syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+          var promise = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+          return promise;
           //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
           //syncro.uploadFile(result, payload.state)
         }).catch((err) => {
