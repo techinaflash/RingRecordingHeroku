@@ -36,14 +36,19 @@ if (config('PROXY_URI')) {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//Main Route
 app.get('/', (req, res) => { res.sendFile('./src/index.html') })
 
+//Test Route
 app.get('/test', (req, res) => {
   console.log('Starting Test')
   const test = slack.postMessage();
   console.log(test)
 })
 
+//********************************************************
+//Slack Message Actions and Events Route           BEGIN
+//******************************************************* */
 app.post('/slack/events', (req, res) => {
   //console.log(req)
   const payload = JSON.parse(req.body.payload);
@@ -81,11 +86,13 @@ app.post('/slack/events', (req, res) => {
       // Slack know the command was received
       res.send('');
       
-      
+        //Convert submitted ticket number to ticket ID in Syncro
         syncro.ticketNumberToID(submission.ticket).then((result) => {
           //console.log('ticketNumberToID Result')
           console.log('Ticket ID is -> ' + result.data.tickets[0].id)
           console.log('State from dialog is -> ' + payload.state)
+          
+          //Uploads recording to Syncro ticket using ID number and Slack public file URL
           var promise = syncro.uploadFile(result.data.tickets[0].id, payload.state)
           return promise;
           
@@ -93,6 +100,8 @@ app.post('/slack/events', (req, res) => {
         }).then((result) => {
           console.log('Result is ->')
           console.log(result.data)
+          
+          //Creates a comment on Syncro ticket using the note put into the Slack dialog
           var promise = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
           return promise;
           //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
@@ -100,6 +109,8 @@ app.post('/slack/events', (req, res) => {
         }).then((result) => {
           console.log('Result is ->')
           console.log(result.data)
+          
+          //Posts an Ephermal message in slack (emphemeral is only visible to the user.)
           slack.postEphemeral(payload)
           //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
           //syncro.uploadFile(result, payload.state)
@@ -137,6 +148,11 @@ app.post('/slack/events', (req, res) => {
 
   
 });
+//********************************************************
+//Slack Message Actions and Events Route           END
+//******************************************************* */
+
+
 
 /* app.post('/commands/starbot', (req, res) => {
   let payload = req.body

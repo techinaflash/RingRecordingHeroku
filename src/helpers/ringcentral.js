@@ -186,7 +186,7 @@ function checkTelephonyStatusChange(user){
         // wait for 20 secs then check for call recordings
         setTimeout(function(){
           readExtensionCallLogs(usersList[i].extensionId, usersList[i].startTime, stopTime)
-        }, 20000)
+        }, 25000)
         break
       }
     }
@@ -263,6 +263,7 @@ function saveAudioFile(record){
     return res.response().buffer();
   })
   .then(function(buffer) {
+    //Get Name associated with phone number from Syncro
     axios.get('https://supportit.syncromsp.com/api/v1/customers', {
       params: {
         api_key:  process.env.SYNCRO_API_KEY,
@@ -270,22 +271,24 @@ function saveAudioFile(record){
       }
     })
     .then(function (response) {
-      //console.log(response.data.customers);
+      //Build mp3 file name as BusinessFullName Direction TimeinZulu
       const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
 
-      var creds = {
-        username: process.env.SP_USERNAME,
-        password: process.env.SP_PASSWORD
-      };
-      var fileOpts = {
-        folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
-        fileName: recFilename,
-        fileContent: buffer
-      };
-  
-      var coreOpts = {
-        siteUrl: process.env.SP_DOMAIN
-      };
+          //Setup variables for Sharepoint Save*********************************
+          var creds = {
+            username: process.env.SP_USERNAME,
+            password: process.env.SP_PASSWORD
+          };
+          var fileOpts = {
+            folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
+            fileName: recFilename,
+            fileContent: buffer
+          };
+      
+          var coreOpts = {
+            siteUrl: process.env.SP_DOMAIN
+          };
+          //*****************************************************************
 
       //Save to Sharepoint
       spsave(coreOpts, creds, fileOpts)
@@ -360,7 +363,7 @@ function saveAudioFile(record){
           ]
         }) */
 
-
+        //BEGIN - Upload file to Slack*************************************************************************
         const result = await web.files.upload({
         filename: (recFilename), 
         // You can use a ReadableStream or a Buffer for the file option
@@ -371,6 +374,7 @@ function saveAudioFile(record){
         initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
         })
         console.log('Result from Slack file upload: ', result);
+        //END - Upload file to Slack****************************************************************************
 
         /* const updateResult = await web.chat.update({
           text: 'text',
