@@ -25,17 +25,20 @@ const callerID = (payload, direction) => {
   }
 
   function commentTicket (ticketNumber, tech, comment){
-    const promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', {
-      params: {
-        api_key: api_key,
+    const parameters = {
+      api_key: api_key,
         hidden: '1',
         do_not_email: '1',
         body: comment,
         //tech: tech,
-        subject: 'Call Recording Log'
-      }
-    });
+        subject: 'Call Recording Log'l
+    } 
+    var promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', parameters)
+    .catch(function (error) {
+      console.log(error);
+    }); 
     return promise;
+
   }
 
   function uploadFile (ticketID, downloadUrl){
