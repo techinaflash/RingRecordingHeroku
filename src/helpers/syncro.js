@@ -44,10 +44,11 @@ const callerID = (payload, direction) => {
       api_key: api_key,
       url: downloadUrl
     } 
-    axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', parameters)
+    var promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', parameters)
     .catch(function (error) {
       console.log(error);
     }); 
+    return promise;
 
   }
 
