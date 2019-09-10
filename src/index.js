@@ -97,6 +97,12 @@ app.post('/slack/events', (req, res) => {
           return promise;
           //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
           //syncro.uploadFile(result, payload.state)
+        }).then((result) => {
+          console.log('Result is ->')
+          console.log(result.data)
+          slack.postEphemeral(result.data)
+          //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
+          //syncro.uploadFile(result, payload.state)
         }).catch((err) => {
           console.log('*****************Error**********************')
           console.log(err)
