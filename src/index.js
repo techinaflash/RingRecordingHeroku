@@ -177,6 +177,9 @@ app.post('/slash', (req, res) => {
   // extract the slash command text, and trigger ID from payload
   const { text, trigger_id } = req.body;
 
+  res.sendStatus(200);
+  console.log("Entered Into Slash Route")
+
   // Verify the signing secret
   if (signature.isVerified(req)) {
     // create the dialog payload - includes the dialog structure, Slack API token,
