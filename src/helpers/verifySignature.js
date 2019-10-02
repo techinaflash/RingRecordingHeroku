@@ -18,3 +18,4 @@ const isVerified = (req) => {
 }; 
   
 module.exports = { isVerified };
+
