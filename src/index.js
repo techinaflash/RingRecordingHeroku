@@ -196,7 +196,7 @@ app.post('/slash', (req, res) => {
   res.send('');
   console.log("Entered Into Slash Route")
 
-  syncro.getTicket(text.then((result) => {
+  syncro.getTicket(text).then((result) => {
     //console.log('ticketNumberToID Result')
     console.log('Ticket ID is -> ' + result.data.tickets[0].id)
     console.log('State from dialog is -> ' + payload.state)
