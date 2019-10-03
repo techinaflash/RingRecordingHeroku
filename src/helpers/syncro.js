@@ -87,4 +87,4 @@ const callerID = (payload, direction) => {
   
   }
 
-module.exports = { commentTicket, uploadFile, ticketNumberToID };
+module.exports = { commentTicket, uploadFile, ticketNumberToID, getTicket };
