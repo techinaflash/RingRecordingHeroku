@@ -204,24 +204,10 @@ app.post('/slash', (req, res) => {
     //Uploads recording to Syncro ticket using ID number and Slack public file URL
     //var promise = syncro.uploadFile(result.data.tickets[0].id, payload.state)
     //return promise;
-    
-    //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-  }).then((result) => {
     console.log('Result is ->')
     console.log(result.data)
-    
-    //Creates a comment on Syncro ticket using the note put into the Slack dialog
-    //var promise = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-    //return promise;
-    //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
-    //syncro.uploadFile(result, payload.state)
-  }).catch((err) => {
-    console.log('*****************Error**********************')
-    console.log(err)
-  });
 
-  
-  // Verify the signing secret
+      // Verify the signing secret
   if (signature.isVerified(req)) {
     console.log("Slack Signature is verified")
     // create the dialog payload - includes the dialog structure, Slack API token,
@@ -285,6 +271,15 @@ app.post('/slash', (req, res) => {
     debug('Verification token mismatch');
     res.sendStatus(404);
   }
+    //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+
+  }).catch((err) => {
+    console.log('*****************Error**********************')
+    console.log(err)
+  });
+
+  
+
 });
 
 
