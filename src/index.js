@@ -218,7 +218,7 @@ app.post('/slash', (req, res) => {
   }).catch((err) => {
     console.log('*****************Error**********************')
     console.log(err)
-  });
+  }));
 
   
   // Verify the signing secret
