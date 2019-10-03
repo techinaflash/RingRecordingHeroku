@@ -17,7 +17,7 @@ const signature = require('./helpers/verifySignature');
 const slack = require('./helpers/slack');
 const syncro = require('./helpers/syncro');
 var ringcentral = require('./helpers/ringcentral');
-//const apiUrl = 'https://slack.com/api';
+const apiUrl = 'https://slack.com/api';
 //var async = require("async");
 const axios = require('axios');
 const debug = require('debug')('slash-command-template:index');
@@ -197,6 +197,7 @@ app.post('/slash', (req, res) => {
 
   // Verify the signing secret
   if (signature.isVerified(req)) {
+    console.log("Slack Signature is verified")
     // create the dialog payload - includes the dialog structure, Slack API token,
     // and trigger ID
     const dialog = {
@@ -253,10 +254,10 @@ app.post('/slash', (req, res) => {
 app.listen(config('PORT'), (err) => {
   if (err) throw err
 
-  console.log(`\n🚀  Starbot LIVES on PORT ${config('PORT')} 🚀`)
+  console.log(`\n🚀  Syncrobot LIVES on PORT ${config('PORT')} 🚀`)
 
   if (config('SLACK_TOKEN')) {
-    console.log(`🤖  beep boop: @starbot is real-time\n`)
+    console.log(`🤖  beep boop: @Syncrobot is real-time\n`)
     bot.listen({ token: config('SLACK_TOKEN') })
   }
 })
