@@ -263,7 +263,7 @@ app.post('/slash', (req, res) => {
     };
 
     // open the dialog by calling dialogs.open method and sending the payload
-    axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialog))
+    var promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialog))
       .then((result) => {
         debug('dialog.open: %o', result.data);
         res.send('');
@@ -271,6 +271,7 @@ app.post('/slash', (req, res) => {
         debug('dialog.open call failed: %o', err);
         res.sendStatus(500);
       });
+    return promise
   } else {
     debug('Verification token mismatch');
     res.sendStatus(404);
