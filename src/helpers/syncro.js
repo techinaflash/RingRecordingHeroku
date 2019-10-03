@@ -33,7 +33,7 @@ const callerID = (payload, direction) => {
         tech: tech,
         subject: 'Call Recording Log'
     } 
-    var promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketNumber + '/comment', parameters)
+    var promise = axios.post(apiUrl + '/tickets/' + ticketNumber + '/comment', parameters)
     .catch(function (error) {
       console.log(error);
     }); 
@@ -47,7 +47,7 @@ const callerID = (payload, direction) => {
       api_key: api_key,
       url: downloadUrl
     } 
-    var promise = axios.post('https://supportit.syncromsp.com/api/v1/tickets/' + ticketID + '/attach_file_url', parameters)
+    var promise = axios.post(apiUrl + '/tickets/' + ticketID + '/attach_file_url', parameters)
     .catch(function (error) {
       console.log(error);
     }); 
@@ -61,7 +61,23 @@ const callerID = (payload, direction) => {
       api_key: api_key,
       number: ticketNumber
      } */
-    const promise = axios.get('https://supportit.syncromsp.com/api/v1/tickets/', {
+    const promise = axios.get(apiUrl + '/tickets/', {
+      params: {
+        api_key: api_key,
+        number: ticketNumber
+      }
+    });
+    return promise;
+  
+  }
+
+  function getTicket(ticketNumber){
+    
+     /* const requestData = {
+      api_key: api_key,
+      number: ticketNumber
+     } */
+    const promise = axios.get(apiUrl + '/tickets/', {
       params: {
         api_key: api_key,
         number: ticketNumber

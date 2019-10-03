@@ -193,9 +193,34 @@ app.post('/slash', (req, res) => {
   // extract the slash command text, and trigger ID from payload
   const { text, trigger_id } = req.body;
 
-  res.sendStatus(200);
+  res.send('');
   console.log("Entered Into Slash Route")
 
+  syncro.getTicket(text.then((result) => {
+    //console.log('ticketNumberToID Result')
+    console.log('Ticket ID is -> ' + result.data.tickets[0].id)
+    console.log('State from dialog is -> ' + payload.state)
+    
+    //Uploads recording to Syncro ticket using ID number and Slack public file URL
+    //var promise = syncro.uploadFile(result.data.tickets[0].id, payload.state)
+    //return promise;
+    
+    //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+  }).then((result) => {
+    console.log('Result is ->')
+    console.log(result.data)
+    
+    //Creates a comment on Syncro ticket using the note put into the Slack dialog
+    //var promise = syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+    //return promise;
+    //syncro.uploadFile(result, 'https://files.slack.com/files-pri/T04P48F8P-FN5TGAQTA/matthew_rebstock_inbound_2019-09-09t17-50-53.360z.mp3?pub_secret=d14e5dc30f')
+    //syncro.uploadFile(result, payload.state)
+  }).catch((err) => {
+    console.log('*****************Error**********************')
+    console.log(err)
+  });
+
+  
   // Verify the signing secret
   if (signature.isVerified(req)) {
     console.log("Slack Signature is verified")
@@ -205,8 +230,8 @@ app.post('/slash', (req, res) => {
       token: process.env.SLACK_ACCESS_TOKEN,
       trigger_id,
       dialog: JSON.stringify({
-        title: 'Submit a helpdesk ticket',
-        callback_id: 'submit-ticket',
+        title: 'Postpone a Ticket',
+        callback_id: 'postpone-ticket',
         submit_label: 'Submit',
         elements: [
           {
@@ -232,6 +257,17 @@ app.post('/slash', (req, res) => {
               { label: 'High', value: 'High' },
             ],
           },
+          {
+            accessory: {
+              type: "datepicker",
+              initial_date: "1990-04-28",
+              placeholder: {
+                type: "plain_text",
+                text: "Select a date",
+                emoji: true
+              }
+            }
+          }
         ],
       }),
     };
