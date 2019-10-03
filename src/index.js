@@ -220,11 +220,16 @@ app.post('/slash', (req, res) => {
         submit_label: 'Submit',
         elements: [
           {
+            "type": "text",
+            "label": "Pickup Location",
+            "name": "loc_origin"
+          },
+          {
             label: 'Title',
             type: 'text',
             name: 'title',
-            value: text,
-            hint: '30 second summary of the problem',
+            value: '*Ticket*: ' + result.data.tickets[0].number + ' - ' + result.data.tickets[0].subject,
+            hint: 'Customer: ' + result.data.tickets[0].customer_business_then_name,
           },
           {
             label: 'Description',
