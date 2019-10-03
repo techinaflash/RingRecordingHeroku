@@ -199,8 +199,7 @@ app.post('/slash', (req, res) => {
   syncro.getTicket(text).then((result) => {
     //console.log('ticketNumberToID Result')
     console.log('Ticket ID is -> ' + result.data.tickets[0].id)
-    console.log('State from dialog is -> ' + payload.state)
-    
+        
     //Uploads recording to Syncro ticket using ID number and Slack public file URL
     //var promise = syncro.uploadFile(result.data.tickets[0].id, payload.state)
     //return promise;
