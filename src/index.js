@@ -207,77 +207,79 @@ app.post('/slash', (req, res) => {
     console.log(result.data)
 
       // Verify the signing secret
-  if (signature.isVerified(req)) {
-    console.log("Slack Signature is verified")
-    // create the dialog payload - includes the dialog structure, Slack API token,
-    // and trigger ID
-    const dialog = {
-      token: process.env.SLACK_ACCESS_TOKEN,
-      trigger_id,
-      dialog: JSON.stringify({
-        title: 'Postpone a Ticket',
-        callback_id: 'postpone-ticket',
-        submit_label: 'Submit',
-        elements: [
-          {
-            "type": "text",
-            "label": "Pickup Location",
-            "name": "loc_origin"
-          },
-          {
-            label: 'Title',
-            type: 'text',
-            name: 'title',
-            value: '*Ticket*: ' + result.data.tickets[0].number + ' - ' + result.data.tickets[0].subject,
-            hint: 'Customer: ' + result.data.tickets[0].customer_business_then_name,
-          },
-          {
-            label: 'Description',
-            type: 'textarea',
-            name: 'description',
-            optional: true,
-          },
-          {
-            label: 'Urgency',
-            type: 'select',
-            name: 'urgency',
-            options: [
-              { label: 'Low', value: 'Low' },
-              { label: 'Medium', value: 'Medium' },
-              { label: 'High', value: 'High' },
-            ],
-          },
-          {
-            accessory: {
-              type: "datepicker",
-              initial_date: "1990-04-28",
-              placeholder: {
-                type: "plain_text",
-                text: "Select a date",
-                emoji: true
+    if (signature.isVerified(req)) {
+      console.log("Slack Signature is verified")
+      // create the dialog payload - includes the dialog structure, Slack API token,
+      // and trigger ID
+      const dialog = {
+        token: process.env.SLACK_ACCESS_TOKEN,
+        trigger_id,
+        dialog: JSON.stringify({
+          title: 'Postpone a Ticket',
+          callback_id: 'postpone-ticket',
+          submit_label: 'Submit',
+          elements: [
+            {
+              "type": "text",
+              "label": "Pickup Location",
+              "name": "loc_origin"
+            },
+            {
+              label: 'Title',
+              type: 'text',
+              name: 'title',
+              value: '*Ticket*: ' + result.data.tickets[0].number + ' - ' + result.data.tickets[0].subject,
+              hint: 'Customer: ' + result.data.tickets[0].customer_business_then_name,
+            },
+            {
+              label: 'Description',
+              type: 'textarea',
+              name: 'description',
+              optional: true,
+            },
+            {
+              label: 'Urgency',
+              type: 'select',
+              name: 'urgency',
+              options: [
+                { label: 'Low', value: 'Low' },
+                { label: 'Medium', value: 'Medium' },
+                { label: 'High', value: 'High' },
+              ],
+            },
+            {
+              accessory: {
+                type: "datepicker",
+                initial_date: "1990-04-28",
+                placeholder: {
+                  type: "plain_text",
+                  text: "Select a date",
+                  emoji: true
+                }
               }
             }
-          }
-        ],
-      }),
-    };
+          ],
+        }),
+      };
 
-    // open the dialog by calling dialogs.open method and sending the payload
-    var promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialog))
-      .then((result) => {
-        debug('dialog.open: %o', result.data);
-        res.send('');
-      }).catch((err) => {
-        debug('dialog.open call failed: %o', err);
-        res.sendStatus(500);
-      });
-    return promise
-  } else {
-    debug('Verification token mismatch');
-    res.sendStatus(404);
-  }
+      // open the dialog by calling dialogs.open method and sending the payload
+      var promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialog))
+        .then((result) => {
+          debug('dialog.open: %o', result.data);
+          res.send('');
+        }).catch((err) => {
+          debug('dialog.open call failed: %o', err);
+          res.sendStatus(500);
+        });
+      return promise
+    } else {
+      debug('Verification token mismatch');
+      res.sendStatus(404);
+    }
     //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-
+  }).then((result) => {
+    console.log('Result from dialog.open is ->')
+    console.log(result.data)
   }).catch((err) => {
     console.log('*****************Error**********************')
     console.log(err)
