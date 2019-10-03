@@ -20,6 +20,7 @@ var ringcentral = require('./helpers/ringcentral');
 const apiUrl = 'https://slack.com/api';
 //var async = require("async");
 const axios = require('axios');
+const qs = require('querystring');
 const debug = require('debug')('slash-command-template:index');
 
 
