@@ -262,24 +262,22 @@ app.post('/slash', (req, res) => {
         }),
       };
 
-      // open the dialog by calling dialogs.open method and sending the payload
-      var promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialog))
-        .then((result) => {
-          debug('dialog.open: %o', result.data);
-          res.send('');
-        }).catch((err) => {
-          debug('dialog.open call failed: %o', err);
+      slack.openDialog2(dialog).then((result) => {
+        if(result.data.error) {
+          console.log(result.data);
           res.sendStatus(500);
-        });
-      return promise
+        } else {
+          res.sendStatus(200);
+        }
+      }).catch((err) => {
+        res.sendStatus(500);
+      });
+
     } else {
       debug('Verification token mismatch');
       res.sendStatus(404);
     }
     //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
-  }).then((result) => {
-    console.log('Result from dialog.open is ->')
-    console.log(result.data)
   }).catch((err) => {
     console.log('*****************Error**********************')
     console.log(err)

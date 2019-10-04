@@ -66,6 +66,51 @@ const openDialog = (payload, real_name) => {
   };
   //END OPEN DIALOG
 
+  //BEGIN OPEN DIALOG
+// open the dialog by calling dialogs.open method and sending the payload
+const openDialog2 = (payload) => {
+
+  //console.log(payload.message.files[0])
+
+  //makeFilePublic (payload.message.files[0].id)
+
+  //var publicDownloadURL = parsePublicFileURL(payload.message.files[0].url_private_download, payload.message.files[0].permalink_public)
+  
+
+  const dialogData = {
+    token: process.env.SLACK_ACCESS_TOKEN,
+    trigger_id: payload.trigger_id,
+    dialog: JSON.stringify({
+      title: 'Upload file to Syncro',
+      state: publicDownloadURL,
+      callback_id: 'upload_to_syncro',
+      submit_label: 'Upload',
+      elements: [
+         {
+           label: 'Ticket Private Comment',
+           type: 'textarea',
+           name: 'comment',
+           value: payload.message.text
+         },
+         {
+           label: 'Attach to Ticket #',
+           type: 'text',
+           name: 'ticket',
+           value: ``,
+           placeholder: 'Enter a ticket number...'
+
+         },
+         
+      ]
+    })
+  };
+
+  // open the dialog by calling dialogs.open method and sending the payload
+  const promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialogData));
+  return promise;
+};
+//END OPEN DIALOG
+
   const postMessage = (payload) => {
     const messageData = {
       //filename: (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3'), 
@@ -197,4 +242,4 @@ const openDialog = (payload, real_name) => {
     var publicDownloadURL = privateURL + '?pub_secret=' + pub_secret
     return publicDownloadURL
   }
-module.exports = { openDialog, postEphemeral, postMessage };
+module.exports = { openDialog, postEphemeral, postMessage, openDialog2 };
