@@ -220,11 +220,6 @@ app.post('/slash', (req, res) => {
           submit_label: 'Submit',
           elements: [
             {
-              "type": "text",
-              "label": "Pickup Location",
-              "name": "loc_origin"
-            },
-            {
               label: 'Title',
               type: 'text',
               name: 'title',
@@ -248,14 +243,14 @@ app.post('/slash', (req, res) => {
               ],
             },
             {
-              accessory: {
+              
                 type: "datepicker",
                 initial_date: "1990-04-28",
                 placeholder: {
                   type: "plain_text",
                   text: "Select a date",
                   emoji: true
-                }
+               
               }
             }
           ],
