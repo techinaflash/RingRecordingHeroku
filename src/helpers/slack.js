@@ -75,38 +75,8 @@ const openDialog2 = (payload) => {
   //makeFilePublic (payload.message.files[0].id)
 
   //var publicDownloadURL = parsePublicFileURL(payload.message.files[0].url_private_download, payload.message.files[0].permalink_public)
-  
-
-  const dialogData = {
-    token: process.env.SLACK_ACCESS_TOKEN,
-    trigger_id: payload.trigger_id,
-    dialog: JSON.stringify({
-      title: 'Upload file to Syncro',
-      state: publicDownloadURL,
-      callback_id: 'upload_to_syncro',
-      submit_label: 'Upload',
-      elements: [
-         {
-           label: 'Ticket Private Comment',
-           type: 'textarea',
-           name: 'comment',
-           value: payload.message.text
-         },
-         {
-           label: 'Attach to Ticket #',
-           type: 'text',
-           name: 'ticket',
-           value: ``,
-           placeholder: 'Enter a ticket number...'
-
-         },
-         
-      ]
-    })
-  };
-
   // open the dialog by calling dialogs.open method and sending the payload
-  const promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialogData));
+  const promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(payload));
   return promise;
 };
 //END OPEN DIALOG
