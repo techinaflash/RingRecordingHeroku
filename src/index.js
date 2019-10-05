@@ -211,43 +211,120 @@ app.post('/slash', (req, res) => {
       console.log("Slack Signature is verified")
       // create the dialog payload - includes the dialog structure, Slack API token,
       // and trigger ID
-      const dialog = {
+      const view = {
         token: process.env.SLACK_ACCESS_TOKEN,
         trigger_id,
-        dialog: JSON.stringify({
-          title: 'Postpone a Ticket',
-          callback_id: 'postpone-ticket',
-          submit_label: 'Submit',
-          elements: [
-            {
-              label: 'Title',
-              type: 'text',
-              name: 'title',
-              value: '*Ticket*: ' + result.data.tickets[0].number + ' - ' + result.data.tickets[0].subject,
-              hint: 'Customer: ' + result.data.tickets[0].customer_business_then_name,
-            },
-            {
-              label: 'Description',
-              type: 'textarea',
-              name: 'description',
-              optional: true,
-            },
-            {
-              label: 'Urgency',
-              type: 'select',
-              name: 'urgency',
-              options: [
-                { label: 'Low', value: 'Low' },
-                { label: 'Medium', value: 'Medium' },
-                { label: 'High', value: 'High' },
-              ],
-            }
-            
+        dialog: JSON.stringify({          
+            ok: true,
+            view: { 
+              id: "VN4EY482G",
+              team_id: "T9M5SK1JMA",
+              type: "modal",
+              title: { 
+                type: "plain_text",
+                text: "Just a modal"
+              },
+              close: {
+                type: "plain_text",
+                text: "Cancel"
+              },
+              submit: null,
+              blocks: [
+             {
+                 type: "section",
+                 text: {
+                     type: "mrkdwn",
+                     text: "Is this the correct Ticket?"
+                 }
+             },
+             {
+                 type: "divider"
+             },
+             {
+                 type: "section",
+                 fields: [
+                     {
+                         type: "mrkdwn",
+                         text: "*Ticket Number:*\n1000"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Title:*\nTechSuite Log Test"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Status:*\nResolved"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Customer:*\nTech in a Flash Computer Services LLC"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Due Date:*\nMar 11 11:28pm"
+                     }
+                 ]
+             },
+             {
+                 type: "section",
+                 text: {
+                     type: "mrkdwn",
+                     text: "Pick a date for the deadline."
+                 },
+                 accessory: {
+                     type: "datepicker",
+                     placeholder: {
+                         type: "plain_text",
+                         text: "Select a date",
+                         emoji: true
+                     }
+                 }
+             },
+             {
+                 type: "divider"
+             },
+             {
+                 type: "actions",
+                 elements: [
+                     {
+                         type: "button",
+                         text: {
+                             type: "plain_text",
+                             emoji: true,
+                             text: "Approve"
+                         },
+                         style: "primary",
+                         value: "Allowed"
+                     },
+                     {
+                         type: "button",
+                         text: {
+                             type: "plain_text",
+                             emoji: true,
+                             text: "Deny"
+                         },
+                         style: "danger",
+                         value: "Denied"
+                     }
+                 ]
+             }
           ],
+              private_metadata: "",
+              callback_id: "modal-identifier",
+              state: { "values": {} },
+              hash: "1568843014.01d284ba",
+              clear_on_close: false,
+              notify_on_close: false,
+              root_view_id: "VN4EY482G",
+              previous_view_id: null,
+              app_id: "AXX3321AQ",
+              bot_id: "BXXP7AM4A" 
+            }
+          
         }),
       };
 
-      slack.openDialog2(dialog).then((result) => {
+      slack.openView(view).then((result) => {
         if(result.data.error) {
           console.log(result.data);
           res.sendStatus(500);
