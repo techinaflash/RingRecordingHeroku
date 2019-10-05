@@ -76,7 +76,7 @@ const openView = (payload) => {
 
   //var publicDownloadURL = parsePublicFileURL(payload.message.files[0].url_private_download, payload.message.files[0].permalink_public)
   // open the dialog by calling dialogs.open method and sending the payload
-  const promise = axios.post(`${apiUrl}/view.open`, qs.stringify(payload));
+  const promise = axios.post(`${apiUrl}/views.open`, qs.stringify(payload));
   return promise;
 };
 //END OPEN DIALOG
