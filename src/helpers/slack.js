@@ -68,7 +68,7 @@ const openDialog = (payload, real_name) => {
 
   //BEGIN OPEN DIALOG
 // open the dialog by calling dialogs.open method and sending the payload
-const openDialog2 = (payload) => {
+const openView = (payload) => {
 
   //console.log(payload.message.files[0])
 
@@ -76,7 +76,7 @@ const openDialog2 = (payload) => {
 
   //var publicDownloadURL = parsePublicFileURL(payload.message.files[0].url_private_download, payload.message.files[0].permalink_public)
   // open the dialog by calling dialogs.open method and sending the payload
-  const promise = axios.post(`${apiUrl}/dialog.open`, qs.stringify(payload));
+  const promise = axios.post(`${apiUrl}/view.open`, qs.stringify(payload));
   return promise;
 };
 //END OPEN DIALOG
@@ -212,4 +212,4 @@ const openDialog2 = (payload) => {
     var publicDownloadURL = privateURL + '?pub_secret=' + pub_secret
     return publicDownloadURL
   }
-module.exports = { openDialog, postEphemeral, postMessage, openDialog2 };
+module.exports = { openDialog, postEphemeral, postMessage, openView };
