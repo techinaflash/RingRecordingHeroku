@@ -205,6 +205,7 @@ app.post('/slash', (req, res) => {
     //return promise;
     console.log('Result is ->')
     console.log(result.data)
+    Promise.resolve(result.data)
 
       // Verify the signing secret
     if (signature.isVerified(req)) {
