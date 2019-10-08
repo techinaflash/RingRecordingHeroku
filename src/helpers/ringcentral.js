@@ -52,7 +52,7 @@ if (process.env.MODE == "production"){
       appSecret:process.env.CLIENT_SECRET_SB
     })
 }
-
+console.log("Server is: " + rcsdk.server)
 
 var platform = rcsdk.platform()
 var subscription = rcsdk.createSubscription()
