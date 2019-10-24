@@ -272,7 +272,11 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //Build mp3 file name as BusinessFullName Direction TimeinZulu
-      var business_and_full_name = response.data.customers[0].business_and_full_name || 'NOT IN SYNCRO';
+      if (typeof(yourvariable) == 'undefined') {
+        var business_and_full_name = 'NOT IN SYNCRO';
+      }else{
+        var business_and_full_name = response.data.customers[0].business_and_full_name;
+      }
       
       const recFilename = (business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
 
