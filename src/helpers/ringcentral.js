@@ -153,18 +153,18 @@ function checkTelephonyStatusChange(user){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
         console.log("ExtensionId " + usersList[i].extensionId + " has an incoming call")
-        axios.get('https://supportit.syncromsp.com/api/callerid/', {
-            params: {
-              did:  usersList[i].callerid,
-              token: process.env.SYNCRO_CALLERID_TOKEN
-            }
-          })
-          .then(function (response) {
+        // axios.get('https://supportit.syncromsp.com/api/callerid/', {
+        //     params: {
+        //       did:  usersList[i].callerid,
+        //       token: process.env.SYNCRO_CALLERID_TOKEN
+        //     }
+        //   })
+        //   .then(function (response) {
             
-          })
-          .catch(function (error) {
-            console.log(error);
-          }); 
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   }); 
         break
       }
       if (usersList[i].telephonyStatus == "Ringing" && user.telephonyStatus == "CallConnected"){
@@ -272,7 +272,9 @@ function saveAudioFile(record){
     })
     .then(function (response) {
       //Build mp3 file name as BusinessFullName Direction TimeinZulu
-      const recFilename = (response.data.customers[0].business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
+      var business_and_full_name = response.data.customers[0].business_and_full_name || 'NOT IN SYNCRO';
+      
+      const recFilename = (business_and_full_name + ' ' + record.direction + ' ' + record.startTime.replace(/[/\\?%*:|"<>]/g, '-') + '.mp3')
 
           //Setup variables for Sharepoint Save*********************************
           var creds = {
@@ -280,7 +282,7 @@ function saveAudioFile(record){
             password: process.env.SP_PASSWORD
           };
           var fileOpts = {
-            folder: 'Shared Documents/General/Call Log/Customers/' + response.data.customers[0].business_and_full_name,
+            folder: 'Shared Documents/General/Call Log/Customers/' + business_and_full_name,
             fileName: recFilename,
             fileContent: buffer
           };
@@ -371,7 +373,7 @@ function saveAudioFile(record){
         file: buffer,
         filetyp: 'mp3',
         channels: conversationId,
-        initial_comment: ('New Ring Central recording - ' + response.data.customers[0].business_and_full_name)
+        initial_comment: ('New Ring Central recording - ' + business_and_full_name)
         })
         console.log('Result from Slack file upload: ', result);
         //END - Upload file to Slack****************************************************************************
