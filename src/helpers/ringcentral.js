@@ -39,7 +39,7 @@ var async = require("async");
 
 //Setup RingCentral SDK with logins
 var rcsdk = null
-if (process.env.MODE == "production"){
+if (process.env.RC_MODE == "production"){
   rcsdk = new RC({
     server:RC.server.production,
     appKey: process.env.CLIENT_ID_PROD,
