@@ -149,6 +149,7 @@ function checkTelephonyStatusChange(user){
     if (usersList[i].extensionId == user.extensionId){
       console.log("OLD -> NEW: " + usersList[i].telephonyStatus + " -> " + user.telephonyStatus)
       newUser = false
+      if (user.direction == 'Outbound'){ outbound = true}else{outbound = false}
       if (usersList[i].telephonyStatus == "NoCall" && user.telephonyStatus == "Ringing"){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
@@ -156,7 +157,8 @@ function checkTelephonyStatusChange(user){
         axios.get('https://supportit.syncromsp.com/api/callerid/', {
             params: {
               did:  usersList[i].callerid,
-              token: process.env.SYNCRO_CALLERID_TOKEN
+              token: process.env.SYNCRO_CALLERID_TOKEN,
+              outbound: outbound
             }
           })
           .then(function (response) {
@@ -196,12 +198,13 @@ function checkTelephonyStatusChange(user){
     if (user.telephonyStatus == "Ringing"){
       user.startTime = createStartTime()
       console.log("ExtensionId " + user.extensionId + " has an incoming call.")
-
+      if (user.direction == 'Outbound'){ outbound = true}else{outbound = false}
       //Pops call alert up in Syncro
       axios.get('https://supportit.syncromsp.com/api/callerid/', {
             params: {
               did:  user.callerid,
-              token: process.env.SYNCRO_CALLERID_TOKEN
+              token: process.env.SYNCRO_CALLERID_TOKEN,
+              outbound: outbound
             }
           })
           .then(function (response) {
