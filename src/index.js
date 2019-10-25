@@ -368,7 +368,7 @@ app.get('/screenshotweb', (req, res) => {
     var screenshot = result.data
 
     //uploads screenshot to slack
-    const result = await web.files.upload({
+    const uploadresult = await web.files.upload({
       filename: ('TicketDashboard.png'), 
       // You can use a ReadableStream or a Buffer for the file option
       // This file is located in the current directory (`process.pwd()`), so the relative path resolves
