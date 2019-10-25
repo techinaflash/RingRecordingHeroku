@@ -23,6 +23,16 @@ const apiUrl = 'https://slack.com/api';
 const axios = require('axios');
 const qs = require('querystring');
 const debug = require('debug')('slash-command-template:index');
+const { WebClient } = require('@slack/web-api');
+
+
+// Initialize Slack WebCLient
+const web = new WebClient(token);
+
+// This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
+//
+const conversationId = 'CPTHPHCNL'; //#alerts-ticket-dashboard channel
+
 
 
 
@@ -352,7 +362,23 @@ app.post('/slash', (req, res) => {
 });
 
 //Gets screenshot from ticket dashboard
-app.get('/screenshotweb', (req, res) => { screenshotlayer.captureWeb().then((result) => { console.log(result) }) })
+app.get('/screenshotweb', (req, res) => { 
+  screenshotlayer.captureWeb().then((result) => { 
+    console.log(result) 
+    var screenshot = result.data
+
+    //uploads screenshot to slack
+    const result = await web.files.upload({
+      filename: ('TicketDashboard.png'), 
+      // You can use a ReadableStream or a Buffer for the file option
+      // This file is located in the current directory (`process.pwd()`), so the relative path resolves
+      file: screenshot,
+      filetyp: 'png',
+      channels: conversationId,
+      initial_comment: ('Ticket Dashboard Screnshot')
+      })
+  }) 
+})
 
 
 app.listen(config('PORT'), (err) => {
