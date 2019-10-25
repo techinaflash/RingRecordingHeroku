@@ -24,6 +24,7 @@ const axios = require('axios');
 const qs = require('querystring');
 const debug = require('debug')('slash-command-template:index');
 const { WebClient } = require('@slack/web-api');
+var async = require("async");
 
 
 // Initialize Slack WebCLient
@@ -367,16 +368,18 @@ app.get('/screenshotweb', (req, res) => {
     console.log(result) 
     var screenshot = result.data
 
-    //uploads screenshot to slack
-    const uploadresult = await web.files.upload({
-      filename: ('TicketDashboard.png'), 
-      // You can use a ReadableStream or a Buffer for the file option
-      // This file is located in the current directory (`process.pwd()`), so the relative path resolves
-      file: screenshot,
-      filetyp: 'png',
-      channels: conversationId,
-      initial_comment: ('Ticket Dashboard Screnshot')
+    (async () => {
+      //uploads screenshot to slack
+      const uploadresult = await web.files.upload({
+        filename: ('TicketDashboard.png'), 
+        // You can use a ReadableStream or a Buffer for the file option
+        // This file is located in the current directory (`process.pwd()`), so the relative path resolves
+        file: screenshot,
+        filetyp: 'png',
+        channels: conversationId,
+        initial_comment: ('Ticket Dashboard Screnshot')
       })
+    })
   }) 
 })
 
