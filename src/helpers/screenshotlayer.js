@@ -12,7 +12,9 @@ function captureWeb(){
             access_key: screenshotlayer_API,
             url: 'https://supportit.syncromsp.com/tickets/dashboard_public/e97cda19-ea54-4680-8f0a-02ef67be300d',
             viewport: '1440x900',
-            fullpage: 1
+            fullpage: 1,
+            format: 'PNG',
+            delay: 2
         }
     });
   return promise;

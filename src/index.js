@@ -375,7 +375,7 @@ app.get('/screenshotweb', (req, res) => {
         // You can use a ReadableStream or a Buffer for the file option
         // This file is located in the current directory (`process.pwd()`), so the relative path resolves
         file: screenshot,
-        filetyp: 'png',
+        filetype: 'png',
         channels: conversationId,
         initial_comment: ('Ticket Dashboard Screnshot')
       })
