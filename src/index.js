@@ -365,7 +365,7 @@ app.post('/slash', (req, res) => {
 //Gets screenshot from ticket dashboard
 app.get('/screenshotweb', (req, res) => { 
   screenshotlayer.captureWeb().then((result) => { 
-    console.log(result) 
+    //console.log(result) 
     var screenshot = result.data
 
     (async () => {
