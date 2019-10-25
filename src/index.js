@@ -28,7 +28,7 @@ var async = require("async");
 
 
 // Initialize Slack WebCLient
-const web = new WebClient(token);
+const web = new WebClient(process.env.SLACK_TOKEN);
 
 // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
 //
