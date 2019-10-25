@@ -31,6 +31,7 @@
     "qs": "^6.8.0",
     "redis": "^2.8.0",
     "ringcentral": "^3.2.2",
+    "screenshotlayer": "^1.0.0",
     "slack": "^6.2.0",
     "spsave": "^3.1.5",
     "tsscmp": "^1.0.6"

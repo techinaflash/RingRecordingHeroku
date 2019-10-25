@@ -15,6 +15,7 @@ const confirmation = require('./helpers/confirmation');
 const exportNote = require('./helpers/exportNote');
 const signature = require('./helpers/verifySignature');
 const slack = require('./helpers/slack');
+const screenshotlayer = require('./helpers/screenshotlayer');
 const syncro = require('./helpers/syncro');
 var ringcentral = require('./helpers/ringcentral');
 const apiUrl = 'https://slack.com/api';
@@ -350,6 +351,12 @@ app.post('/slash', (req, res) => {
 
 });
 
+
+app.post('/screenshotweb', (req, res) => {
+  screenshotlayer.captureWeb().then((result) => {
+    console.log(result)
+  })
+})
 
 app.listen(config('PORT'), (err) => {
   if (err) throw err
