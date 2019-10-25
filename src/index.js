@@ -368,9 +368,9 @@ app.get('/screenshotweb', (req, res) => {
     //console.log(result) 
     var screenshot = result.data
 
-    (async () => {
+    
       //uploads screenshot to slack
-      const uploadresult = await web.files.upload({
+      const uploadresult = web.files.upload({
         filename: ('TicketDashboard.png'), 
         // You can use a ReadableStream or a Buffer for the file option
         // This file is located in the current directory (`process.pwd()`), so the relative path resolves
@@ -379,7 +379,7 @@ app.get('/screenshotweb', (req, res) => {
         channels: conversationId,
         initial_comment: ('Ticket Dashboard Screnshot')
       })
-    })
+    
   }) 
 })
 
