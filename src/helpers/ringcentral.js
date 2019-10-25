@@ -149,7 +149,7 @@ function checkTelephonyStatusChange(user){
     if (usersList[i].extensionId == user.extensionId){
       console.log("OLD -> NEW: " + usersList[i].telephonyStatus + " -> " + user.telephonyStatus)
       newUser = false
-      if (user.direction == 'Outbound'){ outbound = true}else{outbound = false}
+      if (user.direction == 'Outbound'){ outboundstatus = true}else{outboundstatus = false}
       if (usersList[i].telephonyStatus == "NoCall" && user.telephonyStatus == "Ringing"){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
@@ -158,7 +158,7 @@ function checkTelephonyStatusChange(user){
             params: {
               did:  usersList[i].callerid,
               token: process.env.SYNCRO_CALLERID_TOKEN,
-              outbound: outbound
+              outbound: outboundstatus
             }
           })
           .then(function (response) {
