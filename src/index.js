@@ -351,12 +351,9 @@ app.post('/slash', (req, res) => {
 
 });
 
+//Gets screenshot from ticket dashboard
+app.get('/screenshotweb', (req, res) => { screenshotlayer.captureWeb().then((result) => { console.log(result) }) })
 
-app.post('/screenshotweb', (req, res) => {
-  screenshotlayer.captureWeb().then((result) => {
-    console.log(result)
-  })
-})
 
 app.listen(config('PORT'), (err) => {
   if (err) throw err
