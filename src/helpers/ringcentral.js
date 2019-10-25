@@ -153,18 +153,18 @@ function checkTelephonyStatusChange(user){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
         console.log("ExtensionId " + usersList[i].extensionId + " has an incoming call")
-        // axios.get('https://supportit.syncromsp.com/api/callerid/', {
-        //     params: {
-        //       did:  usersList[i].callerid,
-        //       token: process.env.SYNCRO_CALLERID_TOKEN
-        //     }
-        //   })
-        //   .then(function (response) {
+        axios.get('https://supportit.syncromsp.com/api/callerid/', {
+            params: {
+              did:  usersList[i].callerid,
+              token: process.env.SYNCRO_CALLERID_TOKEN
+            }
+          })
+          .then(function (response) {
             
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   }); 
+          })
+          .catch(function (error) {
+            console.log(error);
+          }); 
         break
       }
       if (usersList[i].telephonyStatus == "Ringing" && user.telephonyStatus == "CallConnected"){
