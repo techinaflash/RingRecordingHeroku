@@ -198,13 +198,13 @@ function checkTelephonyStatusChange(user){
     if (user.telephonyStatus == "Ringing"){
       user.startTime = createStartTime()
       console.log("ExtensionId " + user.extensionId + " has an incoming call.")
-      if (user.direction == 'Outbound'){ outbound = true}else{outbound = false}
+      if (user.direction == 'Outbound'){ var outboundstatus = true}else{var outboundstatus = false}
       //Pops call alert up in Syncro
       axios.get('https://supportit.syncromsp.com/api/callerid/', {
             params: {
               did:  user.callerid,
               token: process.env.SYNCRO_CALLERID_TOKEN,
-              outbound: outbound
+              outbound: outboundstatus
             }
           })
           .then(function (response) {
