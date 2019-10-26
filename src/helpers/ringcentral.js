@@ -130,8 +130,9 @@ function subscribeForNotification(){
 }
 
 function presenceEvent(msg){
-  //console.log('Message Body is...')
+  console.log('MESSAGE BODY IS....................................')
   console.log(msg.body)
+  console.log('END MESSAGE BODY...................................')
   //console.log('Caller ID is...')
   //console.log(msg.body.activeCalls[0].from)
   var user = {}
