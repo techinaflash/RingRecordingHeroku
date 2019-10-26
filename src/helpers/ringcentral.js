@@ -5,7 +5,7 @@ const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
 var redisclient = require('redis').createClient(process.env.REDIS_URL);
-const syncro = require('./helpers/syncro');
+const syncro = require('./syncro');
 ///var jsftp = require('jsftp');
 
 //connect to redis client
