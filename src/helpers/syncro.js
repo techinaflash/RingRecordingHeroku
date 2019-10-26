@@ -87,4 +87,15 @@ const callerID = (payload, direction) => {
   
   }
 
-module.exports = { commentTicket, uploadFile, ticketNumberToID, getTicket };
+  function callerid (phoneNumber, outboundTrue){
+    axios.get('https://supportit.syncromsp.com/api/callerid/', {
+      params: {
+        did:  phoneNumber,
+        token: process.env.SYNCRO_CALLERID_TOKEN,
+        outbound: outboundTrue
+      }
+    })
+
+  }
+
+module.exports = { commentTicket, uploadFile, ticketNumberToID, getTicket, callerid };

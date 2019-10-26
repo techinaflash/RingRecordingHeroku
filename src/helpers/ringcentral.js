@@ -5,6 +5,7 @@ const { WebClient } = require('@slack/web-api');
 const axios = require('axios');
 var spsave = require("spsave").spsave;
 var redisclient = require('redis').createClient(process.env.REDIS_URL);
+const syncro = require('./helpers/syncro');
 ///var jsftp = require('jsftp');
 
 //connect to redis client
@@ -150,8 +151,11 @@ function presenceEvent(msg){
   console.log('BEGIN USER VARIABLE ******************')
   console.log(user)
   console.log('END USER VARIABLE ******************')
+  syncro.callerid(user['callerid'],user['outboundstatus'] )
   checkTelephonyStatusChange(user)
 }
+
+
 
 function checkTelephonyStatusChange(user){
   console.log('BEGIN USERLIST VARIABLE ******************')
@@ -167,13 +171,7 @@ function checkTelephonyStatusChange(user){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
         console.log("ExtensionId " + usersList[i].extensionId + " has an incoming call")
-        axios.get('https://supportit.syncromsp.com/api/callerid/', {
-            params: {
-              did:  usersList[i].callerid,
-              token: process.env.SYNCRO_CALLERID_TOKEN,
-              outbound: outboundstatus
-            }
-          })
+        
           .then(function (response) {
             
           })
@@ -210,23 +208,7 @@ function checkTelephonyStatusChange(user){
     console.log("NEW USER: " + " -> " + user.telephonyStatus)
     if (user.telephonyStatus == "Ringing"){
       user.startTime = createStartTime()
-      console.log("ExtensionId " + user.extensionId + " has an incoming call.")
-      if (user.direction == 'Outbound'){ var outboundstatus = true}else{var outboundstatus = false}
-      //Pops call alert up in Syncro
-      axios.get('https://supportit.syncromsp.com/api/callerid/', {
-            params: {
-              did:  user.callerid,
-              token: process.env.SYNCRO_CALLERID_TOKEN,
-              outbound: outboundstatus
-            }
-          })
-          .then(function (response) {
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          }); 
-
+      console.log("ExtensionId " + user.extensionId + " has an incoming call.")               
     }
     usersList.push(user)
   }
