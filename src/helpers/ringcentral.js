@@ -138,18 +138,30 @@ function presenceEvent(msg){
   user['extensionId'] = msg.body.extensionId
   user['telephonyStatus'] = msg.body.telephonyStatus
   user['startTime'] = ""
-  user['callerid'] = msg.body.activeCalls[0].from
+  if (msg.body.activeCalls[0].direction == 'Outbound'){
+    user['outboundstatus'] = true
+    user['callerid'] = msg.body.activeCalls[0].to
+  }else{
+    user['outboundstatus'] = false
+    user['callerid'] = msg.body.activeCalls[0].from
+  }  
   user['direction'] =msg.body.activeCalls[0].direction
+  console.log('BEGIN USER VARIABLE ******************')
+  console.log(user)
+  console.log('END USER VARIABLE ******************')
   checkTelephonyStatusChange(user)
 }
 
 function checkTelephonyStatusChange(user){
+  console.log('BEGIN USERLIST VARIABLE ******************')
+  console.log(usersList)
+  console.log('END USERLIST VARIABLE ******************')
   var newUser = true
   for (var i=0; i<usersList.length; i++){
     if (usersList[i].extensionId == user.extensionId){
       console.log("OLD -> NEW: " + usersList[i].telephonyStatus + " -> " + user.telephonyStatus)
       newUser = false
-      if (user.direction == 'Outbound'){ outboundstatus = true}else{outboundstatus = false}
+      
       if (usersList[i].telephonyStatus == "NoCall" && user.telephonyStatus == "Ringing"){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
