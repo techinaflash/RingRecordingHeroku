@@ -100,7 +100,7 @@ const callerID = (payload, direction) => {
     }
     axios.get('https://supportit.syncromsp.com/api/callerid/', parameters )
     .then(function (response) {
-      //console.log(response)
+      console.log(response)
     })
     .catch(function (error) {
       console.log(error);
