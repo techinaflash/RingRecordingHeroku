@@ -91,6 +91,7 @@ const callerID = (payload, direction) => {
     console.log('****************************RUNNING SYNCRO CALLER ID API*************************************')
     console.log('Phone Number:' + phoneNumber)
     console.log('Outbound = ' + outboundTrue)
+    console.log(process.env.SYNCRO_CALLERID_TOKEN)
     axios.get('https://supportit.syncromsp.com/api/callerid/', {
       params: {
         did:  phoneNumber,
@@ -98,6 +99,12 @@ const callerID = (payload, direction) => {
         outbound: outboundTrue
       }
     })
+    .then(function (response) {
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
 
   }
 
