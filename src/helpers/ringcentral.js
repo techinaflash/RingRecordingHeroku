@@ -151,7 +151,7 @@ function presenceEvent(msg){
   console.log('BEGIN USER VARIABLE ******************')
   console.log(user)
   console.log('END USER VARIABLE ******************')
-  syncro.callerid(user['callerid'],user['outboundstatus'] )
+  syncro.callerid(user.callerid,user.outboundstatus )
   checkTelephonyStatusChange(user)
 }
 
