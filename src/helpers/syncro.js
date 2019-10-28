@@ -92,12 +92,15 @@ const callerID = (payload, direction) => {
     //console.log('Phone Number:' + phoneNumber)
     //console.log('Outbound = ' + outboundTrue)
     const parameters = {
-      did:  phoneNumber,
-      token: process.env.SYNCRO_CALLERID_TOKEN
+      params : {
+        did: phoneNumber,
+        token: process.env.SYNCRO_CALLERID_TOKEN
+      }
     } 
     if (outboundTrue == true){
-      parameters['outbound'] = true
+      parameters.params['outbound'] = true
     }
+    
     axios.get('https://supportit.syncromsp.com/api/callerid/', parameters )
     .then(function (response) {
       console.log(response)
