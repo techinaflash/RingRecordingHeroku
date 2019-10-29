@@ -390,9 +390,8 @@ app.post('/slash', (req, res) => {
       const view = {
         token: process.env.SLACK_ACCESS_TOKEN,
         trigger_id,
-        dialog: JSON.stringify({          
-            ok: true,
-            view: { 
+        view: JSON.stringify({          
+            
               id: "VN4EY482G",
               team_id: "T9M5SK1JMA",
               type: "modal",
@@ -485,7 +484,7 @@ app.post('/slash', (req, res) => {
                  ]
              }
           ]
-            }
+            
           
         }),
       };
