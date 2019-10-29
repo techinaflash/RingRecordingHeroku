@@ -151,7 +151,11 @@ function presenceEvent(msg){
   console.log('BEGIN USER VARIABLE ******************')
   console.log(user)
   console.log('END USER VARIABLE ******************')
-  syncro.callerid(user.callerid,user.outboundstatus )
+  
+  if(user.telephonyStatus == 'Ringing'){
+    syncro.callerid(user.callerid,user.outboundstatus )
+  }
+  
   checkTelephonyStatusChange(user)
 }
 
@@ -171,13 +175,6 @@ function checkTelephonyStatusChange(user){
         usersList[i].telephonyStatus = user.telephonyStatus
         usersList[i].startTime = createStartTime()
         console.log("ExtensionId " + usersList[i].extensionId + " has an incoming call")
-        
-          .then(function (response) {
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          }); 
         break
       }
       if (usersList[i].telephonyStatus == "Ringing" && user.telephonyStatus == "CallConnected"){
