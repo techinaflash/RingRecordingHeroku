@@ -484,17 +484,7 @@ app.post('/slash', (req, res) => {
                      }
                  ]
              }
-          ],
-              private_metadata: "",
-              callback_id: "modal-identifier",
-              state: { "values": {} },
-              hash: "1568843014.01d284ba",
-              clear_on_close: false,
-              notify_on_close: false,
-              root_view_id: "VN4EY482G",
-              previous_view_id: null,
-              app_id: "AXX3321AQ",
-              bot_id: "BXXP7AM4A" 
+          ]
             }
           
         }),
