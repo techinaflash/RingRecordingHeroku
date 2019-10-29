@@ -201,6 +201,9 @@ app.post('/slack/events', (req, res) => {
   cmd.handler(payload, res)
 }) */
 
+
+
+/** Matt's slash code 
 app.post('/slash', (req, res) => {
   // extract the slash command text, and trigger ID from payload
   const { text, trigger_id } = req.body;
@@ -360,6 +363,163 @@ app.post('/slash', (req, res) => {
 
   
 
+});
+*/
+
+/* Nate's slash code */
+app.post('/slash', (req, res) => {
+  // extract the slash command text, and trigger ID from payload
+  const { text, trigger_id } = req.body;
+  
+  syncro.getTicket(text).then((result) => {
+    //console.log('ticketNumberToID Result')
+    console.log('Ticket ID is -> ' + result.data.tickets[0].id)
+        
+    //Uploads recording to Syncro ticket using ID number and Slack public file URL
+    //var promise = syncro.uploadFile(result.data.tickets[0].id, payload.state)
+    //return promise;
+    console.log('Result is ->')
+    console.log(result.data)
+    Promise.resolve(result.data)
+
+      // Verify the signing secret
+    if (signature.isVerified(req)) {
+      console.log("Slack Signature is verified")
+      // create the dialog payload - includes the dialog structure, Slack API token,
+      // and trigger ID
+      const view = {
+        token: process.env.SLACK_ACCESS_TOKEN,
+        trigger_id,
+        dialog: JSON.stringify({          
+            ok: true,
+            view: { 
+              id: "VN4EY482G",
+              team_id: "T9M5SK1JMA",
+              type: "modal",
+              title: { 
+                type: "plain_text",
+                text: "Just a modal"
+              },
+              close: {
+                type: "plain_text",
+                text: "Cancel"
+              },
+              submit: null,
+              blocks: [
+             {
+                 type: "section",
+                 text: {
+                     type: "mrkdwn",
+                     text: "Is this the correct Ticket?"
+                 }
+             },
+             {
+                 type: "divider"
+             },
+             {
+                 type: "section",
+                 fields: [
+                     {
+                         type: "mrkdwn",
+                         text: "*Ticket Number:*\n1000"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Title:*\nTechSuite Log Test"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Status:*\nResolved"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Customer:*\nTech in a Flash Computer Services LLC"
+                     },
+                     {
+                         type: "mrkdwn",
+                         text: "*Due Date:*\nMar 11 11:28pm"
+                     }
+                 ]
+             },
+             {
+                 type: "section",
+                 text: {
+                     type: "mrkdwn",
+                     text: "Pick a date for the deadline."
+                 },
+                 accessory: {
+                     type: "datepicker",
+                     placeholder: {
+                         type: "plain_text",
+                         text: "Select a date",
+                         emoji: true
+                     }
+                 }
+             },
+             {
+                 type: "divider"
+             },
+             {
+                 type: "actions",
+                 elements: [
+                     {
+                         type: "button",
+                         text: {
+                             type: "plain_text",
+                             emoji: true,
+                             text: "Approve"
+                         },
+                         style: "primary",
+                         value: "Allowed"
+                     },
+                     {
+                         type: "button",
+                         text: {
+                             type: "plain_text",
+                             emoji: true,
+                             text: "Deny"
+                         },
+                         style: "danger",
+                         value: "Denied"
+                     }
+                 ]
+             }
+          ],
+              private_metadata: "",
+              callback_id: "modal-identifier",
+              state: { "values": {} },
+              hash: "1568843014.01d284ba",
+              clear_on_close: false,
+              notify_on_close: false,
+              root_view_id: "VN4EY482G",
+              previous_view_id: null,
+              app_id: "AXX3321AQ",
+              bot_id: "BXXP7AM4A" 
+            }
+          
+        }),
+      };
+
+      slack.openView(view).then((result) => {
+        if(result.data.error) {
+          console.log(result.data);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }).catch((err) => {
+        res.sendStatus(500);
+      });
+
+    } else {
+      debug('Verification token mismatch');
+      res.sendStatus(404);
+    }
+    //syncro.commentTicket(submission.ticket, userInfoResult, submission.comment)
+  }).catch((err) => {
+    console.log('*****************Error**********************')
+    console.log(err)
+  });
 });
 
 //Gets screenshot from ticket dashboard
