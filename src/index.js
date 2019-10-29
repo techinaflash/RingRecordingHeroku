@@ -390,10 +390,7 @@ app.post('/slash', (req, res) => {
       const view = {
         token: process.env.SLACK_ACCESS_TOKEN,
         trigger_id,
-        view: JSON.stringify({          
-            
-              id: "VN4EY482G",
-              team_id: "T9M5SK1JMA",
+        view: JSON.stringify({        
               type: "modal",
               title: { 
                 type: "plain_text",
@@ -403,7 +400,6 @@ app.post('/slash', (req, res) => {
                 type: "plain_text",
                 text: "Cancel"
               },
-              submit: null,
               blocks: [
              {
                  type: "section",
