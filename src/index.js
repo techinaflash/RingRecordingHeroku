@@ -515,16 +515,16 @@ app.get('/screenshotweb', (req, res) => {
 
     
       //uploads screenshot to slack
-      const uploadresult = web.files.upload({
-        filename: ('TicketDashboard.png'), 
-        // You can use a ReadableStream or a Buffer for the file option
-        // This file is located in the current directory (`process.pwd()`), so the relative path resolves
-        file: screenshot,
-        filetype: 'png',
-        channels: conversationId,
-        initial_comment: ('Ticket Dashboard Screnshot')
-      })
-    
+      // const uploadresult = web.files.upload({
+      //   filename: ('TicketDashboard.png'), 
+      //   You can use a ReadableStream or a Buffer for the file option
+      //   This file is located in the current directory (`process.pwd()`), so the relative path resolves
+      //   file: screenshot,
+      //   filetype: 'png',
+      //   channels: conversationId,
+      //   initial_comment: ('Ticket Dashboard Screnshot')
+      // })
+      curl -F file=screenshot -F filetype='png' -F filename='TicketDashboard.png' -F "initial_comment='Ticket Dashboard Screnshot'" -F channels=C024BE91L,D032AC32T -H "Authorization: Bearer xoxa-xxxxxxxxx-xxxx" https://slack.com/api/files.upload
   }) 
 })
 
